@@ -1,208 +1,749 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historia 5° Año - CPES N°30</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brigada Guardianes de Fe y Amor | Santa Cruz</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Lora', 'serif'],
+            cinzel: ['Cinzel', 'serif']
+          },
+          colors: {
+            brigada: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .gradient-brigada {
+      background: linear-gradient(135deg, #091e3a 0%, #153860 45%, #1b4965 100%);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    .breathe-bubble {
+      transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .pulse-glow {
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulseGlow 2s infinite;
+    }
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 14px rgba(34, 197, 94, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-200 selection:text-slate-900">
 
-    <header>
-        <h1>Historia Argentina</h1>
-        <h2>5° Año</h2>
-        <div class="profesor-badge">Profesora: Laura Santucci</div>
-    </header>
+  <!-- Barra superior con aviso de uso responsable -->
+  <div class="bg-slate-950 text-amber-300 text-[11px] sm:text-xs font-medium py-1.5 px-4 text-center border-b border-amber-500/20">
+    <span class="inline-flex items-center gap-1.5">
+      <span class="text-red-400 font-bold">⚠️ AVISO IMPORTANTE:</span>
+      <span>Las líneas de la Brigada y auxilio son <strong>exclusivas para emergencias graves y crisis emocional</strong>. Por favor, sé responsable y no satures la línea.</span>
+    </span>
+  </div>
 
-    <main id="main-content">
-        
-        <section class="section-container">
-            <h2 class="section-title">📜 Tarea 1: Periodización (1880 - 1999)</h2>
-            <div class="task-box">
-                <strong>Instrucciones:</strong> Realizar una línea de tiempo o periodización de la historia Argentina desde 1880 a 1999, evidenciando las fechas y etapas más importantes.
-            </div>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/uZHucibvK-c?si=8ClEC7P4WjlhCUCu" allowfullscreen></iframe>
-            </div>
-        </section>
-
-       
-        <section class="section-container" id="seccion-cuestionario-2">
-            <h2 class="section-title">📝 Cuestionario 2: Fin del Modelo y Década Infame</h2>
-            <form id="form-cuestionario-2">
-                <div class="form-group">
-                    <label for="nombre-2">Nombre y Apellido del Alumno:</label>
-                    <input type="text" id="nombre-2" required placeholder="Ej: Juan Pérez">
-                </div>
-                <div class="form-group">
-                    <label>1. ¿Por qué en el año 1880 se considera un punto de inicio en la historia argentina?</label>
-                    <textarea id="q2-1" required placeholder="Desarrolla tu respuesta aquí..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>2. ¿Qué cambios marcaron el fin de ese modelo?</label>
-                    <textarea id="q2-2" required placeholder="Desarrolla tu respuesta aquí..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>3. ¿Qué se entiende por Década Infame?</label>
-                    <textarea id="q2-3" required placeholder="Desarrolla tu respuesta aquí..."></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Enviar Cuestionario 2</button>
-                <div class="success-msg" id="success-2">¡Cuestionario 2 enviado con éxito! Respuestas guardadas en la nube.</div>
-            </form>
-        </section>
-
- <section class="section-container" id="seccion-cuestionario-1">
-            <h2 class="section-title">📝 Cuestionario 3: Generación del 80 y Modelo Agroexportador</h2>
-            <form id="form-cuestionario-1">
-                <div class="form-group">
-                    <label for="nombre-1">Nombre y Apellido del Alumno:</label>
-                    <input type="text" id="nombre-1" required placeholder="Ej: Juan Pérez">
-                </div>
-                <div class="form-group">
-                    <label>1. Leer y comprender el texto correspondiente (Check):</label>
-                    <input type="text" id="q1-1" required placeholder="Escribe 'Leído y comprendido'">
-                </div>
-                <div class="form-group">
-                    <label>2. ¿Qué fue la generación del 80?</label>
-                    <textarea id="q1-2" required placeholder="Desarrolla tu respuesta aquí..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>3. ¿Qué significa el PAN? ¿Cuál era su objetivo?</label>
-                    <textarea id="q1-3" required placeholder="Desarrolla tu respuesta aquí..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>4. ¿Cuándo se sanciona la Ley de Territorios Nacionales? ¿Cuál era su objetivo?</label>
-                    <textarea id="q1-4" required placeholder="Desarrolla tu respuesta aquí..."></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Enviar Cuestionario 3</button>
-                <div class="success-msg" id="success-1">¡Cuestionario 3 enviado con éxito! Respuestas guardadas en la nube.</div>
-            </form>
-        </section>
-
-
-
-        
-        <section class="section-container" id="seccion-cuestionario-3">
-            <h2 class="section-title">📝 Tarea 4: Golpe de Estado de 1930 y Crisis Económica</h2>
-            <form id="form-cuestionario-3">
-                <div class="form-group">
-                    <label for="nombre-3">Nombre y Apellido del Alumno:</label>
-                    <input type="text" id="nombre-3" required placeholder="Ej: Juan Pérez">
-                </div>
-
-                <div class="sub-task-title">▶ Actividad 1: Analizar el material visual</div>
-                <div class="form-group">
-                    <label>1. ¿En qué fecha ocurrió el golpe de Estado de 1930?</label>
-                    <input type="text" id="q3-a1-1" required placeholder="Responda la fecha exacta...">
-                </div>
-                <div class="form-group">
-                    <label>2. ¿Quién encabezó el golpe militar?</label>
-                    <textarea id="q3-a1-2" required placeholder="Escriba el nombre o desglose su respuesta..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>3. ¿Qué sectores apoyaron el golpe?</label>
-                    <textarea id="q3-a1-3" required placeholder="Desarrolle qué sectores de la sociedad civil o fuerzas participaron..."></textarea>
-                </div>
-
-                <div class="sub-task-title">▶ Actividad 2: Impacto de la crisis de 1929 y Opciones Correctas</div>
-                <div class="form-group">
-                    <label>¿Por qué la crisis de 1929 afectó a la Argentina?</label>
-                    <textarea id="q3-a2-base" required placeholder="Explique las consecuencias económicas en el país..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>1. ¿Qué son las villas miserias?</label>
-                    <textarea id="q3-a2-1" required placeholder="Describa el origen o características de estos asentamientos..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>2. ¿Por qué reciben ese nombre?</label>
-                    <textarea id="q3-a2-2" required placeholder="Explique el origen de la denominación..."></textarea>
-                </div>
-
-                <div class="sub-task-title">📌 3. Elija la opción correcta</div>
-
-                <div class="multiple-choice-container">
-                    <p class="multiple-choice-title">A) El golpe de Estado ocurrió en:</p>
-                    <label class="radio-option"><input type="radio" name="opt-a" value="1916" required> 1916</label>
-                    <label class="radio-option"><input type="radio" name="opt-a" value="1930"> 1930</label>
-                    <label class="radio-option"><input type="radio" name="opt-a" value="1976"> 1976</label>
-                </div>
-
-                <div class="multiple-choice-container">
-                    <p class="multiple-choice-title">B) El presidente derrocado fue:</p>
-                    <label class="radio-option"><input type="radio" name="opt-b" value="Juan Domingo Perón" required> Juan Domingo Perón</label>
-                    <label class="radio-option"><input type="radio" name="opt-b" value="Julio Argentino Roca"> Julio Argentino Roca</label>
-                    <label class="radio-option"><input type="radio" name="opt-b" value="Hipólito Yrigoyen"> Hipólito Yrigoyen</label>
-                    <label class="radio-option"><input type="radio" name="opt-b" value="Agustín P. Justo"> Agustín P. Justo</label>
-                </div>
-
-                <div class="multiple-choice-container">
-                    <p class="multiple-choice-title">C) El golpe fue encabezado por:</p>
-                    <label class="radio-option"><input type="radio" name="opt-c" value="Juan Manuel de Rosas" required> Juan Manuel de Rosas</label>
-                    <label class="radio-option"><input type="radio" name="opt-c" value="José Félix Uriburu"> José Félix Uriburu</label>
-                    <label class="radio-option"><input type="radio" name="opt-c" value="Bartolomé Mitre"> Bartolomé Mitre</label>
-                    <label class="radio-option"><input type="radio" name="opt-c" value="Arturo Illia"> Arturo Illia</label>
-                </div>
-
-                <div class="multiple-choice-container">
-                    <p class="multiple-choice-title">D) Una causa importante del golpe de Estado fue:</p>
-                    <label class="radio-option"><input type="radio" name="opt-d" value="La independencia de Argentina" required> La independencia de Argentina</label>
-                    <label class="radio-option"><input type="radio" name="opt-d" value="La crisis económica mundial de 1929"> La crisis económica mundial de 1929</label>
-                    <label class="radio-option"><input type="radio" name="opt-d" value="La primera guerra mundial"> La primera guerra mundial</label>
-                    <label class="radio-option"><input type="radio" name="opt-d" value="La Revolución Industrial"> La Revolución Industrial</label>
-                </div>
-
-                <div class="multiple-choice-container">
-                    <p class="multiple-choice-title">E) Luego del golpe de Estado ¿qué etapa se inicia?:</p>
-                    <label class="radio-option"><input type="radio" name="opt-e" value="La etapa colonial" required> La etapa colonial</label>
-                    <label class="radio-option"><input type="radio" name="opt-e" value="La década infame"> La década infame</label>
-                    <label class="radio-option"><input type="radio" name="opt-e" value="El peronismo"> El peronismo</label>
-                    <label class="radio-option"><input type="radio" name="opt-e" value="La organización nacional"> La organización nacional</label>
-                </div>
-
-                <button type="submit" class="btn-submit">Enviar Tarea 4</button>
-                <div class="success-msg" id="success-3">¡Tarea 4 enviada con éxito! Respuestas guardadas en la nube.</div>
-            </form>
-        </section>
-
-        <section class="section-container" id="login-modal" style="border-top-color: var(--portal-blue);">
-            <h2 class="section-title" style="color: var(--portal-blue);">🔒 Acceso Docente Seguro</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="prof-email">Correo Electrónico:</label>
-                    <input type="email" id="prof-email" required placeholder="profesora@correo.com">
-                </div>
-                <div class="form-group">
-                    <label for="prof-password">Contraseña:</label>
-                    <input type="password" id="prof-password" required>
-                </div>
-                <button type="submit" class="btn-submit" style="background-color: var(--portal-blue);">Iniciar Sesión</button>
-                <p id="login-error" style="color: #EF4444; display: none; margin-top: 10px; font-weight: bold;">Credenciales incorrectas o acceso denegado.</p>
-            </form>
-        </section>
-
-        <section class="section-container" id="teacher-dashboard" style="border-top-color: #10B981;">
-            <h2 class="section-title" style="color: #10B981;">👩‍🏫 Panel de Control - Profesora Laura Santucci</h2>
-            <p>Visualización en tiempo real de los cuestionarios entregados:</p>
-            
-            <div class="filter-tabs">
-                <button class="btn-tab active" id="tab-cuestionario-1">Cuestionario 3</button>
-                <button class="btn-tab" id="tab-cuestionario-2">Cuestionario 2</button>
-                <button class="btn-tab" id="tab-cuestionario-3">Cuestionario 4</button>
-            </div>
-
-            <div id="submissions-container">
-                <p style="color: #6B7280; text-align: center;">Cargando respuestas desde la base de datos...</p>
-            </div>
-            
-            <button id="btn-logout" class="btn-submit" style="background-color: #EF4444; margin-top: 20px; width: auto;">Cerrar Sesión Segura</button>
-        </section>
-
-    </main>
-
-    <div class="teacher-controls">
-        <button class="btn-dashboard" id="btn-toggle-login">Acceso Profesor</button>
+  <header class="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 sticky top-0 z-40 shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm font-medium">
+      <div class="flex items-center space-x-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span>
+        <span class="font-bold tracking-tight">Brigada Guardianes de Fe y Amor • Santa Cruz</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Botón rápido WhatsApp Brigada con confirmación -->
+        <button onclick="confirmEmergencyContact('wa')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-full font-bold transition flex items-center gap-1.5 shadow-sm">
+          <span>💬 SOS WhatsApp: 2966-222702</span>
+        </button>
+        <button onclick="confirmEmergencyContact('call')" class="bg-slate-950 text-amber-300 hover:bg-slate-900 px-3 py-1.5 rounded-full font-bold transition flex items-center gap-1">
+          <span>📞 Llamada de Emergencia</span>
+        </button>
+        <a href="tel:135" class="bg-red-700 text-white hover:bg-red-800 px-2.5 py-1.5 rounded-full font-bold transition hidden md:inline-flex items-center gap-1">
+          <span>Línea 135 (CAS)</span>
+        </a>
+      </div>
     </div>
+  </header>
 
- <script type="module" src="./script.js"></script>
+  <main class="flex-grow">
+    <section class="gradient-brigada text-white relative overflow-hidden py-12 md:py-18 px-4">
+      <div class="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-200 via-transparent to-transparent"></div>
+      
+      <div class="max-w-4xl mx-auto text-center relative z-10 space-y-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/20 text-amber-200 text-xs sm:text-sm font-semibold border border-amber-300/30">
+          <span>🛡️ Brigada Guardianes de Fe y Amor • Santa Cruz te acompaña</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight font-cinzel leading-tight text-white drop-shadow">
+          Tu Vida es Sagrada.<br>
+          <span class="text-amber-300 font-serif italic font-normal">Dios te cuida, te ama y nunca te soltará.</span>
+        </h1>
+
+        <p class="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+          En medio del frío, la soledad o el dolor que hoy oprime tu pecho en nuestra tierra santacruceña, existe un escudo de fe y amor esperando por ti. No estás solo. Queremos acompañarte a resistir y vencer esta noche.
+        </p>
+
+        <!-- Tarjeta de Contacto Directo de la Dueña / Responsable con filtro explícito -->
+        <div class="max-w-2xl mx-auto bg-gradient-to-r from-slate-900/90 via-sky-950/90 to-slate-900/90 border-2 border-amber-400 rounded-3xl p-5 sm:p-7 backdrop-blur-md shadow-2xl text-left">
+          
+          <!-- Banner de uso responsable -->
+          <div class="bg-red-500/20 border border-red-400/50 rounded-2xl p-3 mb-4 flex items-start gap-2.5">
+            <span class="text-xl">⚠️</span>
+            <div class="text-xs text-red-200 leading-relaxed">
+              <strong class="text-white block font-bold uppercase tracking-wide">USO EXCLUSIVO ANTE SITUACIONES DE CRISIS O EMERGENCIA:</strong>
+              Por favor, <strong>no envíes cadenas, bromas, saludos generales ni mensajes que no sean urgentes</strong>. Esta línea personal está abierta para socorrer vidas al borde del colapso emocional. Mantengamos la línea libre para quien realmente se encuentra en peligro ahora mismo.
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center gap-4 justify-between">
+            <div class="space-y-1.5 text-center sm:text-left">
+              <div class="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-300 uppercase tracking-wider">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> Guardia Solidaria en Santa Cruz
+              </div>
+              <h2 class="text-lg sm:text-xl font-bold text-white">¿Estás en un momento límite y necesitas auxilio?</h2>
+              <p class="text-slate-300 text-xs sm:text-sm">
+                Habla directamente con quien coordina la <strong>Brigada Guardianes de Fe y Amor</strong>:
+              </p>
+              <div class="text-2xl font-black text-amber-300 tracking-wider">2966-222702</div>
+            </div>
+            
+            <div class="flex flex-col gap-2.5 w-full sm:w-auto shrink-0">
+              <button onclick="confirmEmergencyContact('wa')" class="pulse-glow bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg text-sm">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                </svg>
+                <span>WhatsApp de Emergencia</span>
+              </button>
+
+              <button onclick="confirmEmergencyContact('call')" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold px-5 py-3 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg text-sm">
+                <span>📞 Llamada Directa Urgente</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acciones de navegación rápida -->
+        <div class="flex flex-wrap justify-center gap-3 pt-2">
+          <a href="#frase-container" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 font-medium px-5 py-2.5 rounded-xl transition backdrop-blur text-sm flex items-center gap-2">
+            <span>🕊️ Palabra de Aliento Divino</span>
+          </a>
+          <a href="#respirar-section" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 font-medium px-5 py-2.5 rounded-xl transition backdrop-blur text-sm flex items-center gap-2">
+            <span>🌿 Ejercicio de Calma</span>
+          </a>
+          <a href="#ayuda-santacruz" class="bg-sky-900/80 hover:bg-sky-800 text-sky-200 border border-sky-400/40 font-semibold px-5 py-2.5 rounded-xl transition text-sm flex items-center gap-2">
+            <span>🛡️ Red Oficial Santa Cruz</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Generador de Frases y Promesas de Aliento -->
+    <section id="frase-container" class="max-w-3xl mx-auto -mt-8 px-4 relative z-20">
+      <div class="card-glass rounded-3xl p-6 sm:p-10 shadow-2xl border border-amber-200 transition-all">
+        <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+          <span class="text-xs uppercase tracking-widest text-amber-800 font-bold flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span> Promesa de Dios para tu Vida
+          </span>
+          <span id="verse-category" class="text-xs text-slate-600 font-semibold bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
+            Consuelo
+          </span>
+        </div>
+
+        <div class="min-h-[170px] flex flex-col justify-center text-center px-2 py-3">
+          <p id="quote-text" class="text-xl sm:text-2xl text-slate-900 font-serif leading-relaxed italic transition-opacity duration-300">
+            "Cercano está el Señor a los quebrantados de corazón, y salva a los de espíritu abatido."
+          </p>
+          <p id="quote-source" class="mt-4 text-sm font-bold tracking-wide text-amber-700 font-sans">
+            — Salmos 34:18
+          </p>
+          <p id="quote-reflection" class="mt-3 text-sm text-slate-600 font-normal max-w-xl mx-auto leading-relaxed">
+            Cuando sientas que tu corazón no da más, no estás abandonado. Dios está más cerca de ti en tu dolor que en cualquier otro momento. Respira hondo.
+          </p>
+        </div>
+
+        <div class="mt-8 pt-5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+          <button id="btn-next-quote" class="bg-gradient-to-r from-sky-800 to-slate-900 hover:from-sky-900 hover:to-black text-white font-semibold px-5 py-2.5 rounded-xl shadow transition flex items-center gap-2 text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <span>Ver otra promesa</span>
+          </button>
+
+          <div class="flex items-center gap-2">
+            <button id="btn-copy-quote" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center gap-1.5" title="Copiar al portapapeles">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              <span id="copy-text">Copiar</span>
+            </button>
+            <button id="btn-share-quote" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 px-4 py-2.5 rounded-xl text-sm font-semibold transition flex items-center gap-1.5">
+              <span>Compartir esperanza</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Espacio de calma y respiración anti-crisis -->
+    <section id="respirar-section" class="max-w-4xl mx-auto px-4 py-14">
+      <div class="text-center mb-8">
+        <span class="text-xs uppercase tracking-widest text-sky-800 font-bold bg-sky-100 px-3 py-1 rounded-full">Ejercicio de Alivio Emocional</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-serif mt-2">Detente un Momento: Respira la Paz de Dios</h2>
+        <p class="text-slate-600 text-sm max-w-lg mx-auto mt-1.5">
+          Cuando el dolor o la angustia nublen tus pensamientos, inhala profundo. Tu respiración es el recordatorio de que Dios aún tiene aliento de vida para ti.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-slate-100 flex flex-col items-center justify-center">
+        <div class="relative w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center my-4">
+          <div id="breathe-outer" class="absolute inset-0 rounded-full bg-sky-100/70 transition-transform duration-1000 ease-in-out scale-90"></div>
+          <div id="breathe-circle" class="w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-gradient-to-tr from-sky-700 to-teal-500 shadow-xl flex flex-col items-center justify-center text-white text-center p-4 breathe-bubble">
+            <span id="breathe-instruction" class="text-base sm:text-lg font-bold tracking-wide">Inhala</span>
+            <span id="breathe-counter" class="text-3xl font-extrabold mt-1 font-mono">4</span>
+          </div>
+        </div>
+
+        <p id="breathe-subtext" class="text-slate-500 italic text-sm mt-3 text-center">
+          "La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da. No se turbe vuestro corazón, ni tenga miedo." (Juan 14:27)
+        </p>
+
+        <div class="mt-6 flex items-center gap-3">
+          <button id="btn-toggle-breathe" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6 py-2.5 rounded-xl shadow transition text-sm">
+            Pausar ejercicio
+          </button>
+          <button id="btn-reset-breathe" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-medium transition">
+            Reiniciar
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tres Pilares de la Brigada -->
+    <section class="bg-amber-50/60 py-16 px-4 border-y border-amber-100">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <span class="text-xs uppercase tracking-widest text-amber-800 font-bold bg-amber-200/60 px-3 py-1 rounded-full">Mensaje de los Guardianes</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-serif mt-2">¿Por qué resistir y seguir adelante?</h2>
+          <p class="text-slate-600 text-sm mt-2">La Brigada Guardianes de Fe y Amor te recuerda tres pilares eternos:</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-100 hover:shadow-md transition">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-4 font-bold">
+              ❤️
+            </div>
+            <h3 class="font-bold text-lg text-slate-900">1. Tu vida es un tesoro divino</h3>
+            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              Dios no se equivocó al crearte. Aunque sientas que nadie te comprende o que eres una carga, eres la obra maestra de su creación y te ama sin condiciones.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-sky-100 hover:shadow-md transition">
+            <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center text-2xl mb-4 font-bold">
+              🌅
+            </div>
+            <h3 class="font-bold text-lg text-slate-900">2. Esta noche no es tu final</h3>
+            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              El dolor nubla la visión del futuro, pero la tormenta pasa. Hay amaneceres nuevos reservados para ti en Santa Cruz, nuevas alegrías y sanidad que aún vas a experimentar.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 hover:shadow-md transition">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-2xl mb-4 font-bold">
+              🛡️
+            </div>
+            <h3 class="font-bold text-lg text-slate-900">3. La Brigada está a tu lado</h3>
+            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+              No tienes que librar esta batalla en silencio. Si queres info Comunícate al <strong>2966-475226</strong>. No juzgamos, no señalamos; estamos para orar, abrazarte y buscar juntos una salida.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Red de Emergencia en Santa Cruz y Contacto de la Brigada -->
+    <section id="ayuda-santacruz" class="max-w-5xl mx-auto px-4 py-16">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <span class="text-xs uppercase tracking-widest text-red-700 font-bold bg-red-100 px-3 py-1 rounded-full">Red de Auxilio Inmediato</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-serif mt-2">Canales de Ayuda en Crisis para Santa Cruz</h2>
+        <p class="text-slate-600 text-sm mt-1">
+          Comunícate de inmediato si estás pasando por una crisis o si conoces a alguien en riesgo de vida.
+        </p>
+      </div>
+
+      <div class="bg-amber-50 border-2 border-amber-300 rounded-3xl p-5 mb-8 flex items-start sm:items-center gap-4 shadow-sm">
+        <div class="w-12 h-12 rounded-2xl bg-amber-200 text-amber-900 flex items-center justify-center text-2xl shrink-0 font-bold">
+          🚨
+        </div>
+        <div class="text-xs sm:text-sm text-slate-700">
+          <strong class="text-amber-950 block font-bold uppercase tracking-wide mb-0.5">Norma fundamental de uso responsable:</strong>
+          Cada minuto puede marcar la diferencia entre la vida y la muerte. Por favor, <strong>no satures estas líneas</strong> con consultas comerciales, mensajes curiosos ni bromas. Los números aquí publicados están dedicados de forma estricta a la <strong>prevención del suicidio, contención de crisis extrema y auxilio médico</strong>.
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Tarjeta Especial: Brigada Guardianes de Fe y Amor -->
+        <div class="bg-gradient-to-b from-amber-50 to-white rounded-3xl p-6 border-2 border-amber-400 shadow-md flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-amber-500 text-slate-950 text-[10px] font-extrabold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+            Prioridad Santa Cruz
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-2xl">🛡️</span>
+              <span class="text-xs font-bold text-amber-900 uppercase">Acompañamiento Espiritual</span>
+            </div>
+            <h3 class="font-bold text-slate-950 text-xl">Brigada Guardianes de Fe y Amor</h3>
+            <p class="text-xs text-slate-600 mt-1">
+              Atención directa y personal con la persona responsable de la brigada para orar, escucharte y sostenerte.
+            </p>
+            <div class="mt-3 bg-white p-3 rounded-2xl border border-amber-200">
+              <div class="text-2xl font-black text-amber-700 tracking-tight">2966-222702</div>
+              <div class="text-[11px] text-red-600 font-semibold mt-0.5">⚠️ Solo llamadas o mensajes por urgencia emocional</div>
+            </div>
+          </div>
+          <div class="mt-5 flex flex-col gap-2">
+            <button onclick="confirmEmergencyContact('wa')" class="w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm flex items-center justify-center gap-2">
+              <span>Escribir por WhatsApp (Crisis)</span>
+            </button>
+            <button onclick="confirmEmergencyContact('call')" class="w-full text-center bg-slate-900 hover:bg-slate-800 text-amber-300 font-bold py-2.5 rounded-xl text-sm transition">
+              Llamar al 2966-222702 (Emergencia)
+            </button>
+          </div>
+        </div>
+
+        <!-- CAS / Línea 135 -->
+        <div class="bg-white rounded-3xl p-6 border-2 border-red-100 hover:border-red-300 shadow-sm transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded">24 HORAS</span>
+              <span class="text-2xl">📞</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-lg">Centro de Asistencia al Suicida</h3>
+            <p class="text-xs text-slate-500 mt-1">Línea gratuita de contención emocional en situaciones críticas.</p>
+            <div class="mt-4">
+              <div class="text-2xl font-black text-red-600 tracking-tight">Línea 135</div>
+              <div class="text-xs text-slate-500 font-semibold">(011) 5275-1135 desde el interior</div>
+            </div>
+          </div>
+          <a href="tel:135" class="mt-5 w-full block text-center bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm">
+            Llamar al 135
+          </a>
+        </div>
+
+        <!-- Urgencias Médicas 107 y Salud Mental -->
+        <div class="bg-white rounded-3xl p-6 border-2 border-sky-100 hover:border-sky-300 shadow-sm transition flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-sky-800 bg-sky-50 px-2 py-0.5 rounded">URGENCIAS MÉDICAS</span>
+              <span class="text-2xl">🚑</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-lg">Emergencias Santa Cruz</h3>
+            <p class="text-xs text-slate-500 mt-1">Guardia hospitalaria y asistencia médica de urgencia en toda la provincia.</p>
+            <div class="mt-4 flex gap-4">
+              <div>
+                <div class="text-2xl font-black text-sky-700">107</div>
+                <div class="text-xs text-slate-500">Ambulancias</div>
+              </div>
+              <div>
+                <div class="text-2xl font-black text-sky-700">911</div>
+                <div class="text-xs text-slate-500">Emergencias</div>
+              </div>
+            </div>
+          </div>
+          <a href="tel:107" class="mt-5 w-full block text-center bg-sky-700 hover:bg-sky-800 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm">
+            Llamar al 107
+          </a>
+        </div>
+      </div>
+
+      <!-- Centros Locales en Santa Cruz -->
+      <div class="mt-8 bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+        <h4 class="font-bold text-slate-800 text-base mb-3 flex items-center gap-2">
+          <span>📍</span> Puntos de Atención y Guardias Hospitalarias en Santa Cruz
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600">
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+            <strong class="text-slate-800 block font-semibold">Hospital Regional Río Gallegos (HRRG)</strong>
+            <span>Servicio de Guardia y Salud Mental • Av. San Martín 1540, Río Gallegos.</span>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+            <strong class="text-slate-800 block font-semibold">Hospital SAMIC El Calafate</strong>
+            <span>Guardia Interdisciplinaria y Asistencia Médica • Av. Jorge Newbery 481, El Calafate.</span>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+            <strong class="text-slate-800 block font-semibold">Hospital Zonal Pedro Tardivo (Caleta Olivia)</strong>
+            <span>Atención de Urgencias y Salud Mental • Av. Eva Perón y Guaraní, Caleta Olivia.</span>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+            <strong class="text-slate-800 block font-semibold">Hospitales y Centros Comunitarios de Santa Cruz</strong>
+            <span>Pico Truncado, Las Heras, Puerto Deseado, Puerto San Julián, 28 de Noviembre y Río Turbio.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Oración para momentos de angustia profunda -->
+    <section class="max-w-3xl mx-auto px-4 pb-16">
+      <div class="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden border border-amber-400/20">
+        <div class="relative z-10 text-center space-y-4">
+          <div class="text-3xl">🕊️</div>
+          <h3 class="text-2xl font-bold font-serif text-amber-200">Oración de Protección y Fortaleza</h3>
+          <p class="text-slate-300 italic text-base leading-relaxed max-w-xl mx-auto">
+            "Padre celestial, hoy mi alma está quebrantada y mis fuerzas se han agotado. Me refugio en tu cuidado y en la certeza de que me amas. Envía a tus ángeles a guardar mi corazón de la desesperación, rodéame con personas que me sostengan y devuélveme la esperanza de vivir. Te entrego mi vida, en el nombre de Jesús. Amén."
+          </p>
+          <div class="pt-2">
+            <button id="btn-save-prayer" class="inline-flex items-center gap-2 text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 px-5 py-2.5 rounded-full transition shadow">
+              <span>📋 Copiar esta oración en mi celular</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
+    <div class="max-w-5xl mx-auto px-4 text-center space-y-3">
+      <p class="text-amber-300 font-semibold text-sm">
+        Brigada Guardianes de Fe y Amor • Santa Cruz, Patagonia Argentina
+      </p>
+      <p class="text-slate-300">
+        Línea de emergencia y contención: <strong class="text-white">2966-222702</strong> (Uso exclusivo ante crisis para no saturar la línea)
+      </p>
+      <p class="text-slate-500 max-w-2xl mx-auto">
+        Espacio dedicado al aliento espiritual y la prevención del suicidio. Si te encuentras en una emergencia inmediata con peligro inminente, comunícate de forma urgente al 107, 911 o acércate a la guardia de salud más cercana.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Modal de confirmación para uso responsable de emergencia -->
+  <div id="emergency-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border-2 border-red-500 transform scale-95 transition-transform duration-200" id="modal-box">
+      <div class="text-center space-y-3">
+        <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">
+          🛡️
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 font-serif">Línea de Emergencia de la Brigada</h3>
+        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+          Estás por comunicarte con la línea personal de guardia (<strong>2966-222702</strong>).
+        </p>
+        <div class="bg-amber-50 border border-amber-300 rounded-xl p-3 text-xs text-amber-900 text-left space-y-1">
+          <p class="font-bold flex items-center gap-1">
+            <span>⚠️</span> Recordatorio de uso responsable:
+          </p>
+          <p>
+            Por favor, confirma que te encuentras atravesando una <strong>crisis emocional, angustia severa o situación de riesgo</strong>. No uses este contacto para mensajes casuales ni consultas secundarias.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-2.5">
+        <button id="modal-btn-confirm" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm transition shadow">
+          Sí, es una emergencia / crisis
+        </button>
+        <button onclick="closeEmergencyModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 rounded-xl text-sm transition">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2 border border-slate-700">
+    <span id="toast-message">Texto copiado con éxito</span>
+  </div>
+
+  <script>
+    let pendingAction = null;
+
+    function confirmEmergencyContact(type) {
+      pendingAction = type;
+      const modal = document.getElementById('emergency-modal');
+      const box = document.getElementById('modal-box');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        box.classList.remove('scale-95');
+        box.classList.add('scale-100');
+      }, 10);
+    }
+
+    function closeEmergencyModal() {
+      const modal = document.getElementById('emergency-modal');
+      const box = document.getElementById('modal-box');
+      modal.classList.add('opacity-0');
+      box.classList.remove('scale-100');
+      box.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        pendingAction = null;
+      }, 200);
+    }
+
+    document.getElementById('modal-btn-confirm').addEventListener('click', () => {
+      const modal = document.getElementById('emergency-modal');
+      modal.classList.add('hidden');
+      modal.classList.add('opacity-0');
+
+      if (pendingAction === 'wa') {
+        const msg = encodeURIComponent('Hola, me comunico de urgencia con la persona responsable de la Brigada Guardianes de Fe y Amor. Estoy atravesando una situación de crisis y angustia extrema, necesito ayuda.');
+        window.open(`https://wa.me/5492966222702?text=${msg}`, '_blank');
+      } else if (pendingAction === 'call') {
+        window.location.href = 'tel:2966222702';
+      }
+      pendingAction = null;
+    });
+
+    // Colección de promesas de fe y reflexiones
+    const quotes = [
+      {
+        quote: "Cercano está el Señor a los quebrantados de corazón, y salva a los de espíritu abatido.",
+        source: "Salmos 34:18",
+        category: "Consuelo Divino",
+        reflection: "Cuando sientas que tu corazón no da más, no estás abandonado. Dios está más cerca de ti en tu dolor que en cualquier otro momento. La Brigada Guardianes de Fe y Amor está a tu lado."
+      },
+      {
+        quote: "Porque yo sé muy bien los planes que tengo para ustedes —afirma el Señor—, planes de bienestar y no de calamidad, a fin de darles un futuro y una esperanza.",
+        source: "Jeremías 29:11",
+        category: "Propósito y Futuro",
+        reflection: "Tu historia en Santa Cruz no concluye en este día oscuro. Dios tiene reservado un mañana con propósito, sanidad y bendición para ti."
+      },
+      {
+        quote: "No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios que te esfuerzo; siempre te ayudaré, siempre te sustentaré con la diestra de mi justicia.",
+        source: "Isaías 41:10",
+        category: "Fortaleza en Crisis",
+        reflection: "No dependes de tus débiles fuerzas actuales; el brazo de Dios te sostiene firme. Comunícate al 2966-222702 para orar juntos."
+      },
+      {
+        quote: "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
+        source: "Mateo 11:28",
+        category: "Descanso del Alma",
+        reflection: "Entrégale esa angustia asfixiante al Señor. No cargues con todo a solas; permítenos ayudarte a sostener la carga."
+      },
+      {
+        quote: "Con amor eterno te he amado; por tanto, te prolongué mi misericordia.",
+        source: "Jeremías 31:3",
+        category: "Amor Incondicional",
+        reflection: "El amor de Dios hacia ti no depende de tus errores ni de tus sentimientos de hoy. Eres de inestimable valor para Él."
+      },
+      {
+        quote: "Aunque pase por el valle de sombra de muerte, no temeré mal alguno, porque tú estarás conmigo; tu vara y tu cayado me infundirán aliento.",
+        source: "Salmos 23:4",
+        category: "Compañía en el Dolor",
+        reflection: "Incluso en la noche más fría y solitaria del sur patagónico, la presencia de Dios es tu refugio inquebrantable."
+      },
+      {
+        quote: "Él sana a los quebrantados de corazón, y venda sus heridas.",
+        source: "Salmos 147:3",
+        category: "Sanidad Emocional",
+        reflection: "No hay herida en tu mente o corazón que escape del amor restaurador del Creador. Date una oportunidad más hoy."
+      },
+      {
+        quote: "La paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones y vuestros pensamientos en Cristo Jesús.",
+        source: "Filipenses 4:7",
+        category: "Paz Interior",
+        reflection: "Permite que la paz de Dios descienda sobre tu mente en este segundo. Estás a salvo y hay un equipo orando por ti."
+      }
+    ];
+
+    let currentQuoteIndex = 0;
+
+    // Referencias al DOM
+    const quoteText = document.getElementById('quote-text');
+    const quoteSource = document.getElementById('quote-source');
+    const quoteCategory = document.getElementById('verse-category');
+    const quoteReflection = document.getElementById('quote-reflection');
+    const btnNextQuote = document.getElementById('btn-next-quote');
+    const btnCopyQuote = document.getElementById('btn-copy-quote');
+    const btnShareQuote = document.getElementById('btn-share-quote');
+    const btnSavePrayer = document.getElementById('btn-save-prayer');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+
+    // Función para actualizar la promesa con transición suave
+    function updateQuote(index) {
+      const q = quotes[index];
+      quoteText.style.opacity = 0;
+      quoteReflection.style.opacity = 0;
+
+      setTimeout(() => {
+        quoteText.textContent = `"${q.quote}"`;
+        quoteSource.textContent = `— ${q.source}`;
+        quoteCategory.textContent = q.category;
+        quoteReflection.textContent = q.reflection;
+        quoteText.style.opacity = 1;
+        quoteReflection.style.opacity = 1;
+      }, 150);
+    }
+
+    btnNextQuote.addEventListener('click', () => {
+      let nextIndex;
+      do {
+        nextIndex = Math.floor(Math.random() * quotes.length);
+      } while (nextIndex === currentQuoteIndex && quotes.length > 1);
+      
+      currentQuoteIndex = nextIndex;
+      updateQuote(currentQuoteIndex);
+    });
+
+    // Toast de notificación
+    function showToast(msg) {
+      toastMessage.textContent = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 3200);
+    }
+
+    // Función segura para copiar texto
+    function copyTextToClipboard(text, successMsg) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        showToast(successMsg || 'Copiado al portapapeles');
+      } catch (err) {
+        showToast('No se pudo copiar');
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+
+    btnCopyQuote.addEventListener('click', () => {
+      const q = quotes[currentQuoteIndex];
+      const textToCopy = `"${q.quote}" - ${q.source}\nReflexión: ${q.reflection}\n(Brigada Guardianes de Fe y Amor - Santa Cruz • Tel: 2966-222702)`;
+      copyTextToClipboard(textToCopy, 'Palabra de aliento copiada');
+    });
+
+    btnShareQuote.addEventListener('click', () => {
+      const q = quotes[currentQuoteIndex];
+      const shareData = {
+        title: 'Brigada Guardianes de Fe y Amor',
+        text: `"${q.quote}" - ${q.source}. Dios cuida de ti. Si estás pasando por un momento difícil en Santa Cruz, comunícate con la Brigada Guardianes de Fe y Amor al 2966-222702 o a la Línea 135.`,
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        copyTextToClipboard(`${shareData.text} ${window.location.href}`, 'Mensaje de esperanza copiado para enviar');
+      }
+    });
+
+    btnSavePrayer.addEventListener('click', () => {
+      const prayer = `Oración de Protección - Brigada Guardianes de Fe y Amor (Santa Cruz): "Padre celestial, hoy mi alma está quebrantada y mis fuerzas se han agotado. Me refugio en tu cuidado y en la certeza de que me amas. Envía a tus ángeles a guardar mi corazón de la desesperación, rodéame con personas que me sostengan y devuélveme la esperanza de vivir. Te entrego mi vida, en el nombre de Jesús. Amén." • Contacto: 2966-222702`;
+      copyTextToClipboard(prayer, 'Oración copiada con éxito');
+    });
+
+    // Módulo de respiración de 4 tiempos
+    const breatheInstruction = document.getElementById('breathe-instruction');
+    const breatheCounter = document.getElementById('breathe-counter');
+    const breatheCircle = document.getElementById('breathe-circle');
+    const breatheOuter = document.getElementById('breathe-outer');
+    const btnToggleBreathe = document.getElementById('btn-toggle-breathe');
+    const btnResetBreathe = document.getElementById('btn-reset-breathe');
+
+    const phases = [
+      { name: 'Inhala', duration: 4, scale: 1.25 },
+      { name: 'Sostén', duration: 4, scale: 1.25 },
+      { name: 'Exhala despacio', duration: 4, scale: 0.9 }
+    ];
+
+    let currentPhaseIndex = 0;
+    let secondsLeft = 4;
+    let breathingInterval = null;
+    let isBreathingActive = true;
+
+    function applyPhaseVisuals(phase) {
+      breatheInstruction.textContent = phase.name;
+      breatheCircle.style.transform = `scale(${phase.scale})`;
+      breatheOuter.style.transform = `scale(${phase.scale * 1.15})`;
+    }
+
+    function runBreathingTick() {
+      breatheCounter.textContent = secondsLeft;
+      
+      if (secondsLeft === 0) {
+        currentPhaseIndex = (currentPhaseIndex + 1) % phases.length;
+        secondsLeft = phases[currentPhaseIndex].duration;
+        applyPhaseVisuals(phases[currentPhaseIndex]);
+        breatheCounter.textContent = secondsLeft;
+      }
+      secondsLeft--;
+    }
+
+    function startBreathing() {
+      if (breathingInterval) clearInterval(breathingInterval);
+      applyPhaseVisuals(phases[currentPhaseIndex]);
+      breathingInterval = setInterval(runBreathingTick, 1000);
+      isBreathingActive = true;
+      btnToggleBreathe.textContent = 'Pausar ejercicio';
+    }
+
+    function pauseBreathing() {
+      if (breathingInterval) clearInterval(breathingInterval);
+      isBreathingActive = false;
+      btnToggleBreathe.textContent = 'Reanudar ejercicio';
+    }
+
+    btnToggleBreathe.addEventListener('click', () => {
+      if (isBreathingActive) {
+        pauseBreathing();
+      } else {
+        startBreathing();
+      }
+    });
+
+    btnResetBreathe.addEventListener('click', () => {
+      pauseBreathing();
+      currentPhaseIndex = 0;
+      secondsLeft = 4;
+      breatheCounter.textContent = '4';
+      applyPhaseVisuals(phases[0]);
+      startBreathing();
+    });
+
+    // Iniciar con la primera promesa y respiración activa
+    window.addEventListener('load', () => {
+      updateQuote(0);
+      startBreathing();
+    });
+  </script>
 </body>
 </html>
