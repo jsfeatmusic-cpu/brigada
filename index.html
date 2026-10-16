@@ -1,749 +1,1271 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brigada Guardianes de Fe y Amor | Santa Cruz</title>
-  
+  <title>Emprendimientos CPES Rural N° 35 | Fuentes del Coyle - Santa Cruz</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts: Inter and Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
-            serif: ['Lora', 'serif'],
-            cinzel: ['Cinzel', 'serif']
+            display: ['Outfit', 'sans-serif']
           },
           colors: {
-            brigada: {
-              50: '#fffbeb',
+            patagonia: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              500: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e'
+            },
+            leather: {
               100: '#fef3c7',
-              500: '#f59e0b',
-              600: '#d97706',
+              500: '#d97706',
               700: '#b45309',
               800: '#92400e',
               900: '#78350f'
+            },
+            urban: {
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81'
             }
           }
         }
       }
     }
   </script>
-
   <style>
-    .gradient-brigada {
-      background: linear-gradient(135deg, #091e3a 0%, #153860 45%, #1b4965 100%);
+    .gradient-hero-overlay {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.92) 100%);
     }
-    .card-glass {
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
+    .card-hover-effect {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .breathe-bubble {
-      transition: all 4s cubic-bezier(0.4, 0, 0.2, 1);
+    .card-hover-effect:hover {
+      transform: translateY(-4px);
     }
-    .pulse-glow {
-      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-      animation: pulseGlow 2s infinite;
-    }
-    @keyframes pulseGlow {
-      0% {
-        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-      }
-      70% {
-        box-shadow: 0 0 0 14px rgba(34, 197, 94, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-      }
+    .ig-gradient {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-200 selection:text-slate-900">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-200 selection:text-amber-900">
 
-  <!-- Barra superior con aviso de uso responsable -->
-  <div class="bg-slate-950 text-amber-300 text-[11px] sm:text-xs font-medium py-1.5 px-4 text-center border-b border-amber-500/20">
-    <span class="inline-flex items-center gap-1.5">
-      <span class="text-red-400 font-bold">⚠️ AVISO IMPORTANTE:</span>
-      <span>Las líneas de la Brigada y auxilio son <strong>exclusivas para emergencias graves y crisis emocional</strong>. Por favor, sé responsable y no satures la línea.</span>
-    </span>
+  <!-- NOTIFICATION TOAST -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-slate-700 max-w-sm">
+    <div id="toast-icon" class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <div class="text-sm font-medium" id="toast-message">Notificación</div>
   </div>
 
-  <header class="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 sticky top-0 z-40 shadow-md">
-    <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm font-medium">
-      <div class="flex items-center space-x-2">
-        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span>
-        <span class="font-bold tracking-tight">Brigada Guardianes de Fe y Amor • Santa Cruz</span>
+  <!-- NAVIGATION -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- School Brand Identity -->
+        <a href="#inicio" class="flex items-center gap-3 group">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-600 via-sky-700 to-slate-900 flex items-center justify-center text-white shadow-md shadow-sky-600/20 group-hover:scale-105 transition-transform duration-200">
+            <i class="fa-solid fa-graduation-cap text-xl"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-display font-extrabold text-lg text-slate-900 tracking-tight">CPES Rural N° 35</span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 font-semibold border border-sky-200">Santa Cruz</span>
+            </div>
+            <p class="text-xs text-slate-500 font-medium">Fuentes del Coyle • Emprendimientos Estudiantiles</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+          <a href="#inicio" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-100/70 rounded-lg transition-colors">Inicio</a>
+          <a href="#perfiles" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-100/70 rounded-lg transition-colors">Emprendimientos</a>
+          <a href="#catalogo" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-100/70 rounded-lg transition-colors">Catálogo de Productos</a>
+          <a href="#comunidad" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-100/70 rounded-lg transition-colors">Nuestra Escuela</a>
+          <a href="#contacto" class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-100/70 rounded-lg transition-colors">Contacto</a>
+        </nav>
+
+        <!-- CTA Buttons -->
+        <div class="hidden sm:flex items-center gap-3">
+          <a href="#perfiles" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 shadow-sm transition-all duration-200 hover:shadow">
+            <i class="fa-brands fa-instagram text-pink-400"></i>
+            <span>Ver Instagrams</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" type="button" aria-label="Abrir menú" class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+          <i id="mobile-menu-icon" class="fa-solid fa-bars text-xl"></i>
+        </button>
       </div>
-      <div class="flex flex-wrap items-center gap-2">
-        <!-- Botón rápido WhatsApp Brigada con confirmación -->
-        <button onclick="confirmEmergencyContact('wa')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-full font-bold transition flex items-center gap-1.5 shadow-sm">
-          <span>💬 SOS WhatsApp: 2966-222702</span>
-        </button>
-        <button onclick="confirmEmergencyContact('call')" class="bg-slate-950 text-amber-300 hover:bg-slate-900 px-3 py-1.5 rounded-full font-bold transition flex items-center gap-1">
-          <span>📞 Llamada de Emergencia</span>
-        </button>
-        <a href="tel:135" class="bg-red-700 text-white hover:bg-red-800 px-2.5 py-1.5 rounded-full font-bold transition hidden md:inline-flex items-center gap-1">
-          <span>Línea 135 (CAS)</span>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-menu" class="hidden md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-6 space-y-2">
+      <a href="#inicio" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-sky-600">Inicio</a>
+      <a href="#perfiles" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-sky-600">Emprendimientos en Instagram</a>
+      <a href="#catalogo" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-sky-600">Catálogo de Productos</a>
+      <a href="#comunidad" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-sky-600">Nuestra Escuela y Fuentes del Coyle</a>
+      <a href="#contacto" class="mobile-nav-link block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-sky-600">Contacto y Apoyo</a>
+      <div class="pt-3 flex flex-col gap-2">
+        <a href="https://www.instagram.com/flordelsur.talabarteria/?hl=es-la" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl text-sm font-semibold text-amber-900 bg-amber-50 border border-amber-200">
+          <i class="fa-brands fa-instagram text-amber-700"></i> Flor del Sur Talabartería
+        </a>
+        <a href="https://www.instagram.com/urb_anstepstore/?hl=es-la" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl text-sm font-semibold text-indigo-900 bg-indigo-50 border border-indigo-200">
+          <i class="fa-brands fa-instagram text-indigo-700"></i> Urban Step Store
         </a>
       </div>
     </div>
   </header>
 
-  <main class="flex-grow">
-    <section class="gradient-brigada text-white relative overflow-hidden py-12 md:py-18 px-4">
-      <div class="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-200 via-transparent to-transparent"></div>
-      
-      <div class="max-w-4xl mx-auto text-center relative z-10 space-y-6">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/20 text-amber-200 text-xs sm:text-sm font-semibold border border-amber-300/30">
-          <span>🛡️ Brigada Guardianes de Fe y Amor • Santa Cruz te acompaña</span>
+  <!-- HERO SECTION -->
+  <section id="inicio" class="relative overflow-hidden bg-slate-900 text-white min-h-[580px] lg:min-h-[640px] flex items-center">
+    <!-- Hero Background Image with inlined base64 -->
+    <div class="absolute inset-0 z-0">
+      <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_14676297756222305551_opt.jpg" alt="Escuela y paisaje de Fuentes del Coyle Santa Cruz" class="w-full h-full object-cover object-center scale-105 filter brightness-95">
+      <div class="absolute inset-0 gradient-hero-overlay"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+      <div class="max-w-3xl">
+        
+        <!-- Location and School Tags -->
+        <div class="inline-flex flex-wrap items-center gap-2 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30 backdrop-blur-sm">
+            <i class="fa-solid fa-location-dot"></i> Paraje Fuentes del Coyle, Santa Cruz
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-400/30 backdrop-blur-sm">
+            <i class="fa-solid fa-award"></i> Jóvenes Emprendedores Rurales
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 backdrop-blur-sm">
+            <i class="fa-solid fa-sparkles"></i> 100% Proyectos Estudiantiles
+          </span>
         </div>
 
-        <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight font-cinzel leading-tight text-white drop-shadow">
-          Tu Vida es Sagrada.<br>
-          <span class="text-amber-300 font-serif italic font-normal">Dios te cuida, te ama y nunca te soltará.</span>
+        <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-tight mb-6">
+          El talento joven de <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-amber-300 to-sky-200">Fuentes del Coyle</span> emprende hacia el mundo
         </h1>
 
-        <p class="text-slate-200 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
-          En medio del frío, la soledad o el dolor que hoy oprime tu pecho en nuestra tierra santacruceña, existe un escudo de fe y amor esperando por ti. No estás solo. Queremos acompañarte a resistir y vencer esta noche.
+        <p class="text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed font-normal">
+          Desde el <strong>CPES Rural N° 35</strong> en la inmensidad de Santa Cruz, nuestros estudiantes combinan la riqueza del <strong>oficio tradicional de la talabartería criolla</strong> con el dinamismo del <strong>calzado y la moda urbana</strong>. Proyectos nacidos en las aulas que crecen en comunidad y se conectan a través de las redes.
         </p>
 
-        <!-- Tarjeta de Contacto Directo de la Dueña / Responsable con filtro explícito -->
-        <div class="max-w-2xl mx-auto bg-gradient-to-r from-slate-900/90 via-sky-950/90 to-slate-900/90 border-2 border-amber-400 rounded-3xl p-5 sm:p-7 backdrop-blur-md shadow-2xl text-left">
-          
-          <!-- Banner de uso responsable -->
-          <div class="bg-red-500/20 border border-red-400/50 rounded-2xl p-3 mb-4 flex items-start gap-2.5">
-            <span class="text-xl">⚠️</span>
-            <div class="text-xs text-red-200 leading-relaxed">
-              <strong class="text-white block font-bold uppercase tracking-wide">USO EXCLUSIVO ANTE SITUACIONES DE CRISIS O EMERGENCIA:</strong>
-              Por favor, <strong>no envíes cadenas, bromas, saludos generales ni mensajes que no sean urgentes</strong>. Esta línea personal está abierta para socorrer vidas al borde del colapso emocional. Mantengamos la línea libre para quien realmente se encuentra en peligro ahora mismo.
-            </div>
-          </div>
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="#perfiles" class="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl text-base font-semibold text-slate-900 bg-white hover:bg-slate-100 shadow-lg shadow-white/10 transition-all duration-200 hover:-translate-y-0.5">
+            <i class="fa-solid fa-users-viewfinder text-sky-600"></i>
+            <span>Conectar con Emprendimientos</span>
+          </a>
+          <a href="#catalogo" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-base font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>Ver Productos Destacados</span>
+          </a>
+        </div>
 
-          <div class="flex flex-col sm:flex-row items-center gap-4 justify-between">
-            <div class="space-y-1.5 text-center sm:text-left">
-              <div class="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-300 uppercase tracking-wider">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> Guardia Solidaria en Santa Cruz
-              </div>
-              <h2 class="text-lg sm:text-xl font-bold text-white">¿Estás en un momento límite y necesitas auxilio?</h2>
-              <p class="text-slate-300 text-xs sm:text-sm">
-                Habla directamente con quien coordina la <strong>Brigada Guardianes de Fe y Amor</strong>:
-              </p>
-              <div class="text-2xl font-black text-amber-300 tracking-wider">2966-222702</div>
-            </div>
+        <!-- Quick Stats Pill -->
+        <div class="mt-12 pt-8 border-t border-slate-700/80 grid grid-cols-2 sm:grid-cols-3 gap-6">
+          <div>
+            <div class="font-display text-2xl sm:text-3xl font-bold text-white">2</div>
+            <div class="text-xs sm:text-sm text-slate-400 font-medium">Marcas Juveniles Activas</div>
+          </div>
+          <div>
+            <div class="font-display text-2xl sm:text-3xl font-bold text-sky-400">100%</div>
+            <div class="text-xs sm:text-sm text-slate-400 font-medium">Gestión por Estudiantes</div>
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <div class="font-display text-2xl sm:text-3xl font-bold text-amber-400">Patagonia</div>
+            <div class="text-xs sm:text-sm text-slate-400 font-medium">Identidad y Producción Local</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHTED PROFILES SECTION (CORE USER REQUEST) -->
+  <section id="perfiles" class="py-20 lg:py-28 bg-slate-50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 border border-sky-200 mb-3">
+          <i class="fa-solid fa-circle-check text-sky-600"></i> Proyectos Oficiales del Alumnado
+        </div>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight">
+          Perfiles de Emprendimiento & Conexión Instagram
+        </h2>
+        <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
+          Seguí, apoyá y comunicate directamente con las cuentas de Instagram de nuestros estudiantes. Cada compra e interacción impulsa su desarrollo formativo, vocacional y económico en el paraje.
+        </p>
+      </div>
+
+      <!-- Profiles Grid: Two Featured Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+
+        <!-- PROFILE 1: FLOR DEL SUR TALABARTERIA -->
+        <div class="bg-white rounded-3xl border border-amber-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group">
+          <div>
             
-            <div class="flex flex-col gap-2.5 w-full sm:w-auto shrink-0">
-              <button onclick="confirmEmergencyContact('wa')" class="pulse-glow bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg text-sm">
-                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-                </svg>
-                <span>WhatsApp de Emergencia</span>
-              </button>
-
-              <button onclick="confirmEmergencyContact('call')" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold px-5 py-3 rounded-2xl transition flex items-center justify-center gap-2 shadow-lg text-sm">
-                <span>📞 Llamada Directa Urgente</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Acciones de navegación rápida -->
-        <div class="flex flex-wrap justify-center gap-3 pt-2">
-          <a href="#frase-container" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 font-medium px-5 py-2.5 rounded-xl transition backdrop-blur text-sm flex items-center gap-2">
-            <span>🕊️ Palabra de Aliento Divino</span>
-          </a>
-          <a href="#respirar-section" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 font-medium px-5 py-2.5 rounded-xl transition backdrop-blur text-sm flex items-center gap-2">
-            <span>🌿 Ejercicio de Calma</span>
-          </a>
-          <a href="#ayuda-santacruz" class="bg-sky-900/80 hover:bg-sky-800 text-sky-200 border border-sky-400/40 font-semibold px-5 py-2.5 rounded-xl transition text-sm flex items-center gap-2">
-            <span>🛡️ Red Oficial Santa Cruz</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Generador de Frases y Promesas de Aliento -->
-    <section id="frase-container" class="max-w-3xl mx-auto -mt-8 px-4 relative z-20">
-      <div class="card-glass rounded-3xl p-6 sm:p-10 shadow-2xl border border-amber-200 transition-all">
-        <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
-          <span class="text-xs uppercase tracking-widest text-amber-800 font-bold flex items-center gap-1.5">
-            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span> Promesa de Dios para tu Vida
-          </span>
-          <span id="verse-category" class="text-xs text-slate-600 font-semibold bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
-            Consuelo
-          </span>
-        </div>
-
-        <div class="min-h-[170px] flex flex-col justify-center text-center px-2 py-3">
-          <p id="quote-text" class="text-xl sm:text-2xl text-slate-900 font-serif leading-relaxed italic transition-opacity duration-300">
-            "Cercano está el Señor a los quebrantados de corazón, y salva a los de espíritu abatido."
-          </p>
-          <p id="quote-source" class="mt-4 text-sm font-bold tracking-wide text-amber-700 font-sans">
-            — Salmos 34:18
-          </p>
-          <p id="quote-reflection" class="mt-3 text-sm text-slate-600 font-normal max-w-xl mx-auto leading-relaxed">
-            Cuando sientas que tu corazón no da más, no estás abandonado. Dios está más cerca de ti en tu dolor que en cualquier otro momento. Respira hondo.
-          </p>
-        </div>
-
-        <div class="mt-8 pt-5 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
-          <button id="btn-next-quote" class="bg-gradient-to-r from-sky-800 to-slate-900 hover:from-sky-900 hover:to-black text-white font-semibold px-5 py-2.5 rounded-xl shadow transition flex items-center gap-2 text-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-            </svg>
-            <span>Ver otra promesa</span>
-          </button>
-
-          <div class="flex items-center gap-2">
-            <button id="btn-copy-quote" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-medium transition flex items-center gap-1.5" title="Copiar al portapapeles">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-              </svg>
-              <span id="copy-text">Copiar</span>
-            </button>
-            <button id="btn-share-quote" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 px-4 py-2.5 rounded-xl text-sm font-semibold transition flex items-center gap-1.5">
-              <span>Compartir esperanza</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Espacio de calma y respiración anti-crisis -->
-    <section id="respirar-section" class="max-w-4xl mx-auto px-4 py-14">
-      <div class="text-center mb-8">
-        <span class="text-xs uppercase tracking-widest text-sky-800 font-bold bg-sky-100 px-3 py-1 rounded-full">Ejercicio de Alivio Emocional</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-serif mt-2">Detente un Momento: Respira la Paz de Dios</h2>
-        <p class="text-slate-600 text-sm max-w-lg mx-auto mt-1.5">
-          Cuando el dolor o la angustia nublen tus pensamientos, inhala profundo. Tu respiración es el recordatorio de que Dios aún tiene aliento de vida para ti.
-        </p>
-      </div>
-
-      <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-slate-100 flex flex-col items-center justify-center">
-        <div class="relative w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center my-4">
-          <div id="breathe-outer" class="absolute inset-0 rounded-full bg-sky-100/70 transition-transform duration-1000 ease-in-out scale-90"></div>
-          <div id="breathe-circle" class="w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-gradient-to-tr from-sky-700 to-teal-500 shadow-xl flex flex-col items-center justify-center text-white text-center p-4 breathe-bubble">
-            <span id="breathe-instruction" class="text-base sm:text-lg font-bold tracking-wide">Inhala</span>
-            <span id="breathe-counter" class="text-3xl font-extrabold mt-1 font-mono">4</span>
-          </div>
-        </div>
-
-        <p id="breathe-subtext" class="text-slate-500 italic text-sm mt-3 text-center">
-          "La paz os dejo, mi paz os doy; yo no os la doy como el mundo la da. No se turbe vuestro corazón, ni tenga miedo." (Juan 14:27)
-        </p>
-
-        <div class="mt-6 flex items-center gap-3">
-          <button id="btn-toggle-breathe" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6 py-2.5 rounded-xl shadow transition text-sm">
-            Pausar ejercicio
-          </button>
-          <button id="btn-reset-breathe" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-sm font-medium transition">
-            Reiniciar
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tres Pilares de la Brigada -->
-    <section class="bg-amber-50/60 py-16 px-4 border-y border-amber-100">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center max-w-2xl mx-auto mb-10">
-          <span class="text-xs uppercase tracking-widest text-amber-800 font-bold bg-amber-200/60 px-3 py-1 rounded-full">Mensaje de los Guardianes</span>
-          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-serif mt-2">¿Por qué resistir y seguir adelante?</h2>
-          <p class="text-slate-600 text-sm mt-2">La Brigada Guardianes de Fe y Amor te recuerda tres pilares eternos:</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-white p-6 rounded-2xl shadow-sm border border-amber-100 hover:shadow-md transition">
-            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-2xl mb-4 font-bold">
-              ❤️
-            </div>
-            <h3 class="font-bold text-lg text-slate-900">1. Tu vida es un tesoro divino</h3>
-            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
-              Dios no se equivocó al crearte. Aunque sientas que nadie te comprende o que eres una carga, eres la obra maestra de su creación y te ama sin condiciones.
-            </p>
-          </div>
-
-          <div class="bg-white p-6 rounded-2xl shadow-sm border border-sky-100 hover:shadow-md transition">
-            <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center text-2xl mb-4 font-bold">
-              🌅
-            </div>
-            <h3 class="font-bold text-lg text-slate-900">2. Esta noche no es tu final</h3>
-            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
-              El dolor nubla la visión del futuro, pero la tormenta pasa. Hay amaneceres nuevos reservados para ti en Santa Cruz, nuevas alegrías y sanidad que aún vas a experimentar.
-            </p>
-          </div>
-
-          <div class="bg-white p-6 rounded-2xl shadow-sm border border-emerald-100 hover:shadow-md transition">
-            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center text-2xl mb-4 font-bold">
-              🛡️
-            </div>
-            <h3 class="font-bold text-lg text-slate-900">3. La Brigada está a tu lado</h3>
-            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
-              No tienes que librar esta batalla en silencio. Si queres info Comunícate al <strong>2966-475226</strong>. No juzgamos, no señalamos; estamos para orar, abrazarte y buscar juntos una salida.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Red de Emergencia en Santa Cruz y Contacto de la Brigada -->
-    <section id="ayuda-santacruz" class="max-w-5xl mx-auto px-4 py-16">
-      <div class="text-center max-w-2xl mx-auto mb-8">
-        <span class="text-xs uppercase tracking-widest text-red-700 font-bold bg-red-100 px-3 py-1 rounded-full">Red de Auxilio Inmediato</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 font-serif mt-2">Canales de Ayuda en Crisis para Santa Cruz</h2>
-        <p class="text-slate-600 text-sm mt-1">
-          Comunícate de inmediato si estás pasando por una crisis o si conoces a alguien en riesgo de vida.
-        </p>
-      </div>
-
-      <div class="bg-amber-50 border-2 border-amber-300 rounded-3xl p-5 mb-8 flex items-start sm:items-center gap-4 shadow-sm">
-        <div class="w-12 h-12 rounded-2xl bg-amber-200 text-amber-900 flex items-center justify-center text-2xl shrink-0 font-bold">
-          🚨
-        </div>
-        <div class="text-xs sm:text-sm text-slate-700">
-          <strong class="text-amber-950 block font-bold uppercase tracking-wide mb-0.5">Norma fundamental de uso responsable:</strong>
-          Cada minuto puede marcar la diferencia entre la vida y la muerte. Por favor, <strong>no satures estas líneas</strong> con consultas comerciales, mensajes curiosos ni bromas. Los números aquí publicados están dedicados de forma estricta a la <strong>prevención del suicidio, contención de crisis extrema y auxilio médico</strong>.
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <!-- Tarjeta Especial: Brigada Guardianes de Fe y Amor -->
-        <div class="bg-gradient-to-b from-amber-50 to-white rounded-3xl p-6 border-2 border-amber-400 shadow-md flex flex-col justify-between relative overflow-hidden">
-          <div class="absolute top-0 right-0 bg-amber-500 text-slate-950 text-[10px] font-extrabold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
-            Prioridad Santa Cruz
-          </div>
-          <div>
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-2xl">🛡️</span>
-              <span class="text-xs font-bold text-amber-900 uppercase">Acompañamiento Espiritual</span>
-            </div>
-            <h3 class="font-bold text-slate-950 text-xl">Brigada Guardianes de Fe y Amor</h3>
-            <p class="text-xs text-slate-600 mt-1">
-              Atención directa y personal con la persona responsable de la brigada para orar, escucharte y sostenerte.
-            </p>
-            <div class="mt-3 bg-white p-3 rounded-2xl border border-amber-200">
-              <div class="text-2xl font-black text-amber-700 tracking-tight">2966-222702</div>
-              <div class="text-[11px] text-red-600 font-semibold mt-0.5">⚠️ Solo llamadas o mensajes por urgencia emocional</div>
-            </div>
-          </div>
-          <div class="mt-5 flex flex-col gap-2">
-            <button onclick="confirmEmergencyContact('wa')" class="w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm flex items-center justify-center gap-2">
-              <span>Escribir por WhatsApp (Crisis)</span>
-            </button>
-            <button onclick="confirmEmergencyContact('call')" class="w-full text-center bg-slate-900 hover:bg-slate-800 text-amber-300 font-bold py-2.5 rounded-xl text-sm transition">
-              Llamar al 2966-222702 (Emergencia)
-            </button>
-          </div>
-        </div>
-
-        <!-- CAS / Línea 135 -->
-        <div class="bg-white rounded-3xl p-6 border-2 border-red-100 hover:border-red-300 shadow-sm transition flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded">24 HORAS</span>
-              <span class="text-2xl">📞</span>
-            </div>
-            <h3 class="font-bold text-slate-900 text-lg">Centro de Asistencia al Suicida</h3>
-            <p class="text-xs text-slate-500 mt-1">Línea gratuita de contención emocional en situaciones críticas.</p>
-            <div class="mt-4">
-              <div class="text-2xl font-black text-red-600 tracking-tight">Línea 135</div>
-              <div class="text-xs text-slate-500 font-semibold">(011) 5275-1135 desde el interior</div>
-            </div>
-          </div>
-          <a href="tel:135" class="mt-5 w-full block text-center bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm">
-            Llamar al 135
-          </a>
-        </div>
-
-        <!-- Urgencias Médicas 107 y Salud Mental -->
-        <div class="bg-white rounded-3xl p-6 border-2 border-sky-100 hover:border-sky-300 shadow-sm transition flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-sky-800 bg-sky-50 px-2 py-0.5 rounded">URGENCIAS MÉDICAS</span>
-              <span class="text-2xl">🚑</span>
-            </div>
-            <h3 class="font-bold text-slate-900 text-lg">Emergencias Santa Cruz</h3>
-            <p class="text-xs text-slate-500 mt-1">Guardia hospitalaria y asistencia médica de urgencia en toda la provincia.</p>
-            <div class="mt-4 flex gap-4">
-              <div>
-                <div class="text-2xl font-black text-sky-700">107</div>
-                <div class="text-xs text-slate-500">Ambulancias</div>
+            <!-- Card Header Visual -->
+            <div class="relative h-64 sm:h-72 w-full overflow-hidden bg-amber-950">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_8760602179200025646_opt.jpg" alt="Talabartería Flor del Sur - Artesanías en Cuero" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+              
+              <!-- Category Badge -->
+              <div class="absolute top-4 left-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-amber-900/90 text-amber-100 border border-amber-700/60 backdrop-blur-md shadow-sm">
+                  <i class="fa-solid fa-hammer"></i> Talabartería & Tradición Gaucha
+                </span>
               </div>
-              <div>
-                <div class="text-2xl font-black text-sky-700">911</div>
-                <div class="text-xs text-slate-500">Emergencias</div>
+
+              <!-- Instagram Floating Tag -->
+              <div class="absolute top-4 right-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-white/95 text-slate-900 shadow-sm backdrop-blur-md">
+                  <i class="fa-brands fa-instagram text-pink-600 text-sm"></i> @flordelsur.talabarteria
+                </span>
+              </div>
+
+              <!-- Bottom of image text -->
+              <div class="absolute bottom-4 left-4 right-4 text-white">
+                <span class="text-xs uppercase tracking-wider font-semibold text-amber-300">Emprendimiento Rural CPES N° 35</span>
+                <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight">Flor del Sur Talabartería</h3>
               </div>
             </div>
-          </div>
-          <a href="tel:107" class="mt-5 w-full block text-center bg-sky-700 hover:bg-sky-800 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm">
-            Llamar al 107
-          </a>
-        </div>
-      </div>
 
-      <!-- Centros Locales en Santa Cruz -->
-      <div class="mt-8 bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-        <h4 class="font-bold text-slate-800 text-base mb-3 flex items-center gap-2">
-          <span>📍</span> Puntos de Atención y Guardias Hospitalarias en Santa Cruz
-        </h4>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600">
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-            <strong class="text-slate-800 block font-semibold">Hospital Regional Río Gallegos (HRRG)</strong>
-            <span>Servicio de Guardia y Salud Mental • Av. San Martín 1540, Río Gallegos.</span>
-          </div>
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-            <strong class="text-slate-800 block font-semibold">Hospital SAMIC El Calafate</strong>
-            <span>Guardia Interdisciplinaria y Asistencia Médica • Av. Jorge Newbery 481, El Calafate.</span>
-          </div>
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-            <strong class="text-slate-800 block font-semibold">Hospital Zonal Pedro Tardivo (Caleta Olivia)</strong>
-            <span>Atención de Urgencias y Salud Mental • Av. Eva Perón y Guaraní, Caleta Olivia.</span>
-          </div>
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-            <strong class="text-slate-800 block font-semibold">Hospitales y Centros Comunitarios de Santa Cruz</strong>
-            <span>Pico Truncado, Las Heras, Puerto Deseado, Puerto San Julián, 28 de Noviembre y Río Turbio.</span>
-          </div>
-        </div>
-      </div>
-    </section>
+            <!-- Card Body Content -->
+            <div class="p-6 sm:p-8">
+              <p class="text-slate-600 text-base leading-relaxed mb-6">
+                Un homenaje a las raíces camperas de Santa Cruz. Los estudiantes elaboran artesanalmente <strong>mates forrados en cuero curtido, cinturones repujados a mano con hebillas criollas, vainas reforzadas para cuchillos, llaveros y accesorios</strong>. Cada pieza refleja paciencia, detalle y amor por el patrimonio rural patagónico.
+              </p>
 
-    <!-- Oración para momentos de angustia profunda -->
-    <section class="max-w-3xl mx-auto px-4 pb-16">
-      <div class="bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden border border-amber-400/20">
-        <div class="relative z-10 text-center space-y-4">
-          <div class="text-3xl">🕊️</div>
-          <h3 class="text-2xl font-bold font-serif text-amber-200">Oración de Protección y Fortaleza</h3>
-          <p class="text-slate-300 italic text-base leading-relaxed max-w-xl mx-auto">
-            "Padre celestial, hoy mi alma está quebrantada y mis fuerzas se han agotado. Me refugio en tu cuidado y en la certeza de que me amas. Envía a tus ángeles a guardar mi corazón de la desesperación, rodéame con personas que me sostengan y devuélveme la esperanza de vivir. Te entrego mi vida, en el nombre de Jesús. Amén."
-          </p>
-          <div class="pt-2">
-            <button id="btn-save-prayer" class="inline-flex items-center gap-2 text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 px-5 py-2.5 rounded-full transition shadow">
-              <span>📋 Copiar esta oración en mi celular</span>
+              <!-- Highlights list -->
+              <div class="grid grid-cols-2 gap-3 mb-6">
+                <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-amber-50/70 border border-amber-100 p-2.5 rounded-xl">
+                  <i class="fa-solid fa-check-circle text-amber-600"></i>
+                  <span>Cuero 100% legítimo</span>
+                </div>
+                <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-amber-50/70 border border-amber-100 p-2.5 rounded-xl">
+                  <i class="fa-solid fa-check-circle text-amber-600"></i>
+                  <span>Costuras a mano</span>
+                </div>
+                <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-amber-50/70 border border-amber-100 p-2.5 rounded-xl">
+                  <i class="fa-solid fa-check-circle text-amber-600"></i>
+                  <span>Diseños personalizados</span>
+                </div>
+                <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-amber-50/70 border border-amber-100 p-2.5 rounded-xl">
+                  <i class="fa-solid fa-check-circle text-amber-600"></i>
+                  <span>Envíos coordinados</span>
+                </div>
+              </div>
+
+              <!-- Instagram Profile Direct Card Box -->
+              <div class="bg-gradient-to-r from-amber-50 to-orange-50/60 rounded-2xl p-4 border border-amber-200 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-full ig-gradient flex items-center justify-center text-white text-2xl shadow-sm">
+                    <i class="fa-brands fa-instagram"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs text-slate-500 font-medium">Cuenta Oficial de Instagram</div>
+                    <div class="font-bold text-slate-900 text-sm sm:text-base">@flordelsur.talabarteria</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                  <button type="button" onclick="copyInstagramLink('https://www.instagram.com/flordelsur.talabarteria/?hl=es-la', 'Flor del Sur')" class="px-3 py-2 text-xs font-semibold rounded-lg bg-white border border-amber-300 text-amber-900 hover:bg-amber-100/60 transition-colors flex items-center gap-1.5 shadow-xs">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Enlace</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Card Actions Footer -->
+          <div class="p-6 sm:p-8 pt-0 flex flex-col sm:flex-row items-stretch gap-3">
+            <a href="https://www.instagram.com/flordelsur.talabarteria/?hl=es-la" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-amber-700 to-amber-800 hover:from-amber-800 hover:to-amber-900 shadow-md hover:shadow-lg transition-all duration-200">
+              <i class="fa-brands fa-instagram text-lg"></i>
+              <span>Abrir Instagram de Flor del Sur</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-75"></i>
+            </a>
+            <button type="button" onclick="filterCatalog('talabarteria')" class="px-4 py-3 rounded-xl font-semibold text-amber-900 bg-amber-100 hover:bg-amber-200 transition-colors text-sm flex items-center justify-center gap-2">
+              <i class="fa-solid fa-eye"></i>
+              <span>Ver Productos</span>
             </button>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
-    <div class="max-w-5xl mx-auto px-4 text-center space-y-3">
-      <p class="text-amber-300 font-semibold text-sm">
-        Brigada Guardianes de Fe y Amor • Santa Cruz, Patagonia Argentina
-      </p>
-      <p class="text-slate-300">
-        Línea de emergencia y contención: <strong class="text-white">2966-222702</strong> (Uso exclusivo ante crisis para no saturar la línea)
-      </p>
-      <p class="text-slate-500 max-w-2xl mx-auto">
-        Espacio dedicado al aliento espiritual y la prevención del suicidio. Si te encuentras en una emergencia inmediata con peligro inminente, comunícate de forma urgente al 107, 911 o acércate a la guardia de salud más cercana.
-      </p>
+        <!-- PROFILE 2: URBAN STEP STORE -->
+        <div class="bg-white rounded-3xl border border-indigo-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group">
+          <div>
+            
+            <!-- Card Header Visual -->
+            <div class="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-900">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_18385894788399941151_opt.jpg" alt="Urban Step Store - Zapatillas y Calzado Urbano" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+              
+              <!-- Category Badge -->
+              <div class="absolute top-4 left-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-indigo-900/90 text-indigo-100 border border-indigo-700/60 backdrop-blur-md shadow-sm">
+                  <i class="fa-solid fa-shoe-prints"></i> Calzado Urbano & Streetwear
+                </span>
+              </div>
+
+              <!-- Instagram Floating Tag -->
+              <div class="absolute top-4 right-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-white/95 text-slate-900 shadow-sm backdrop-blur-md">
+                  <i class="fa-brands fa-instagram text-pink-600 text-sm"></i> @urb_anstepstore
+                </span>
+              </div>
+
+              <!-- Bottom of image text -->
+              <div class="absolute bottom-4 left-4 right-4 text-white">
+                <span class="text-xs uppercase tracking-wider font-semibold text-indigo-300">Emprendimiento Juvenil CPES N° 35</span>
+                <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight">Urban Step Store</h3>
+              </div>
+            </div>
+
+            <!-- Card Body Content -->
+            <div class="p-6 sm:p-8">
+              <p class="text-slate-600 text-base leading-relaxed mb-6">
+                La propuesta urbana que marca tendencia entre los jóvenes santacruceños. Gestionado por estudiantes de Fuentes del Coyle, Urban Step Store ofrece <strong>zapatillas urbanas, calzado lifestyle, modelos deportivos y prendas streetwear</strong>, gestionando stock, pedidos online y logística regional con profesionalismo.
+              </p>
+
+              <!-- Highlights list -->
+              <div class="grid grid-cols-2 gap-3 mb-6">
+                <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl">
+                  <i class="fa-solid fa-check-circle text-indigo-600"></i>
+                  <span>Modelos de tendencia</span>
+                </div>
+                <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl">
+                  <i class="fa-solid fa-check-circle text-indigo-600"></i>
+                  <span>Variedad de talles</span>
+                </div>
+                <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl">
+                  <i class="fa-solid fa-check-circle text-indigo-600"></i>
+                  <span>Atención personalizada</span>
+                </div>
+                <div class="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-slate-700 bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl">
+                  <i class="fa-solid fa-check-circle text-indigo-600"></i>
+                  <span>Entregas en Santa Cruz</span>
+                </div>
+              </div>
+
+              <!-- Instagram Profile Direct Card Box -->
+              <div class="bg-gradient-to-r from-indigo-50 to-blue-50/60 rounded-2xl p-4 border border-indigo-200 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-full ig-gradient flex items-center justify-center text-white text-2xl shadow-sm">
+                    <i class="fa-brands fa-instagram"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs text-slate-500 font-medium">Cuenta Oficial de Instagram</div>
+                    <div class="font-bold text-slate-900 text-sm sm:text-base">@urb_anstepstore</div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                  <button type="button" onclick="copyInstagramLink('https://www.instagram.com/urb_anstepstore/?hl=es-la', 'Urban Step Store')" class="px-3 py-2 text-xs font-semibold rounded-lg bg-white border border-indigo-300 text-indigo-900 hover:bg-indigo-100/60 transition-colors flex items-center gap-1.5 shadow-xs">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Enlace</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Card Actions Footer -->
+          <div class="p-6 sm:p-8 pt-0 flex flex-col sm:flex-row items-stretch gap-3">
+            <a href="https://www.instagram.com/urb_anstepstore/?hl=es-la" target="_blank" rel="noopener noreferrer" class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-700 to-indigo-800 hover:from-indigo-800 hover:to-indigo-900 shadow-md hover:shadow-lg transition-all duration-200">
+              <i class="fa-brands fa-instagram text-lg"></i>
+              <span>Abrir Instagram de Urban Step</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-75"></i>
+            </a>
+            <button type="button" onclick="filterCatalog('calzado')" class="px-4 py-3 rounded-xl font-semibold text-indigo-900 bg-indigo-100 hover:bg-indigo-200 transition-colors text-sm flex items-center justify-center gap-2">
+              <i class="fa-solid fa-eye"></i>
+              <span>Ver Productos</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE PRODUCT CATALOG SHOWCASE -->
+  <section id="catalogo" class="py-20 bg-white border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <span class="text-xs uppercase font-bold tracking-wider text-sky-600">Galería de Producción Escolar</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900 mt-1">Catálogo Destacado</h2>
+          <p class="text-slate-600 mt-2 max-w-xl">
+            Explorá los productos creados y gestionados por los alumnos. Seleccioná cualquier artículo para conocer sus características o conectar con su creador.
+          </p>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" id="filter-btn-all" onclick="filterCatalog('all')" class="catalog-filter-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-slate-900 text-white shadow-xs">
+            Todos (8)
+          </button>
+          <button type="button" id="filter-btn-talabarteria" onclick="filterCatalog('talabarteria')" class="catalog-filter-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-amber-100 hover:text-amber-900">
+            <i class="fa-solid fa-hammer mr-1 text-amber-600"></i> Flor del Sur (4)
+          </button>
+          <button type="button" id="filter-btn-calzado" onclick="filterCatalog('calzado')" class="catalog-filter-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-indigo-100 hover:text-indigo-900">
+            <i class="fa-solid fa-shoe-prints mr-1 text-indigo-600"></i> Urban Step (4)
+          </button>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="mb-8 max-w-md">
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input type="text" id="catalog-search" oninput="handleSearch()" placeholder="Buscar producto, material o estilo..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-sm bg-slate-50/70">
+        </div>
+      </div>
+
+      <!-- Product Cards Grid -->
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Product 1 -->
+        <div class="product-card card-hover-effect bg-slate-50 border border-slate-200/90 rounded-2xl overflow-hidden flex flex-col justify-between" data-category="talabarteria" data-name="Mate Criollo Camionero">
+          <div>
+            <div class="relative h-48 bg-amber-900/10 flex items-center justify-center p-4 overflow-hidden">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_8760602179200025646_opt.jpg" alt="Mate Criollo Flor del Sur" class="w-full h-full object-cover rounded-xl">
+              <span class="absolute top-2 left-2 text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-900 text-amber-100">Flor del Sur</span>
+            </div>
+            <div class="p-4">
+              <div class="text-xs text-amber-700 font-semibold mb-1">Talabartería Criolla</div>
+              <h4 class="font-bold text-slate-900 text-base mb-1">Mate Camionero Repujado</h4>
+              <p class="text-xs text-slate-500 line-clamp-2 mb-3">Calabaza seleccionada gruesa forrada en cuero vacuno teñido a mano con virola de alpaca cincelada.</p>
+              <div class="text-xs font-semibold text-slate-700 bg-amber-100/70 inline-block px-2 py-1 rounded">Hecho a mano en Fuentes del Coyle</div>
+            </div>
+          </div>
+          <div class="p-4 pt-0 flex items-center gap-2">
+            <button type="button" onclick="openProductModal('mate')" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 transition-colors">
+              Detalles
+            </button>
+            <a href="https://www.instagram.com/flordelsur.talabarteria/?hl=es-la" target="_blank" rel="noopener noreferrer" class="py-2 px-3 text-xs font-semibold rounded-lg bg-amber-700 hover:bg-amber-800 text-white transition-colors" title="Ver en Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card card-hover-effect bg-slate-50 border border-slate-200/90 rounded-2xl overflow-hidden flex flex-col justify-between" data-category="talabarteria" data-name="Cinto Gaucho con Hebilla Bronce">
+          <div>
+            <div class="relative h-48 bg-amber-900/10 flex items-center justify-center p-4 overflow-hidden">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_8760602179200025646_opt.jpg" alt="Cinto Gaucho Flor del Sur" class="w-full h-full object-cover rounded-xl">
+              <span class="absolute top-2 left-2 text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-900 text-amber-100">Flor del Sur</span>
+            </div>
+            <div class="p-4">
+              <div class="text-xs text-amber-700 font-semibold mb-1">Talabartería Criolla</div>
+              <h4 class="font-bold text-slate-900 text-base mb-1">Cinto Cuero Labrado</h4>
+              <p class="text-xs text-slate-500 line-clamp-2 mb-3">Cuero curtido al vegetal de primera calidad con labrado artesanal de motivos tradicionales patagónicos.</p>
+              <div class="text-xs font-semibold text-slate-700 bg-amber-100/70 inline-block px-2 py-1 rounded">Talles personalizados</div>
+            </div>
+          </div>
+          <div class="p-4 pt-0 flex items-center gap-2">
+            <button type="button" onclick="openProductModal('cinto')" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 transition-colors">
+              Detalles
+            </button>
+            <a href="https://www.instagram.com/flordelsur.talabarteria/?hl=es-la" target="_blank" rel="noopener noreferrer" class="py-2 px-3 text-xs font-semibold rounded-lg bg-amber-700 hover:bg-amber-800 text-white transition-colors" title="Ver en Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card card-hover-effect bg-slate-50 border border-slate-200/90 rounded-2xl overflow-hidden flex flex-col justify-between" data-category="talabarteria" data-name="Vaina y Cabo Criollo">
+          <div>
+            <div class="relative h-48 bg-amber-900/10 flex items-center justify-center p-4 overflow-hidden">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_8760602179200025646_opt.jpg" alt="Vaina Criolla Flor del Sur" class="w-full h-full object-cover rounded-xl">
+              <span class="absolute top-2 left-2 text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-900 text-amber-100">Flor del Sur</span>
+            </div>
+            <div class="p-4">
+              <div class="text-xs text-amber-700 font-semibold mb-1">Talabartería Criolla</div>
+              <h4 class="font-bold text-slate-900 text-base mb-1">Vaina para Cuchillo Campero</h4>
+              <p class="text-xs text-slate-500 line-clamp-2 mb-3">Vaina de cuero curtido con traba de seguridad y costura en tiento crudo de potro para faena o desfile.</p>
+              <div class="text-xs font-semibold text-slate-700 bg-amber-100/70 inline-block px-2 py-1 rounded">Resistencia extrema</div>
+            </div>
+          </div>
+          <div class="p-4 pt-0 flex items-center gap-2">
+            <button type="button" onclick="openProductModal('vaina')" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 transition-colors">
+              Detalles
+            </button>
+            <a href="https://www.instagram.com/flordelsur.talabarteria/?hl=es-la" target="_blank" rel="noopener noreferrer" class="py-2 px-3 text-xs font-semibold rounded-lg bg-amber-700 hover:bg-amber-800 text-white transition-colors" title="Ver en Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card card-hover-effect bg-slate-50 border border-slate-200/90 rounded-2xl overflow-hidden flex flex-col justify-between" data-category="talabarteria" data-name="Billetera de Cuero Genuino">
+          <div>
+            <div class="relative h-48 bg-amber-900/10 flex items-center justify-center p-4 overflow-hidden">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_8760602179200025646_opt.jpg" alt="Billetera de Cuero Flor del Sur" class="w-full h-full object-cover rounded-xl">
+              <span class="absolute top-2 left-2 text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-900 text-amber-100">Flor del Sur</span>
+            </div>
+            <div class="p-4">
+              <div class="text-xs text-amber-700 font-semibold mb-1">Talabartería Criolla</div>
+              <h4 class="font-bold text-slate-900 text-base mb-1">Billetera Compacta Artesanal</h4>
+              <p class="text-xs text-slate-500 line-clamp-2 mb-3">Diseño práctico y duradero con compartimento para billetes, tarjetas y monedero con cierre o broche.</p>
+              <div class="text-xs font-semibold text-slate-700 bg-amber-100/70 inline-block px-2 py-1 rounded">100% Cuero Genuino</div>
+            </div>
+          </div>
+          <div class="p-4 pt-0 flex items-center gap-2">
+            <button type="button" onclick="openProductModal('billetera')" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 transition-colors">
+              Detalles
+            </button>
+            <a href="https://www.instagram.com/flordelsur.talabarteria/?hl=es-la" target="_blank" rel="noopener noreferrer" class="py-2 px-3 text-xs font-semibold rounded-lg bg-amber-700 hover:bg-amber-800 text-white transition-colors" title="Ver en Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card card-hover-effect bg-slate-50 border border-slate-200/90 rounded-2xl overflow-hidden flex flex-col justify-between" data-category="calzado" data-name="Zapatillas Retro Runner">
+          <div>
+            <div class="relative h-48 bg-indigo-900/10 flex items-center justify-center p-4 overflow-hidden">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_18385894788399941151_opt.jpg" alt="Zapatillas Retro Runner Urban Step" class="w-full h-full object-cover rounded-xl">
+              <span class="absolute top-2 left-2 text-[11px] font-bold px-2 py-0.5 rounded-md bg-indigo-900 text-indigo-100">Urban Step</span>
+            </div>
+            <div class="p-4">
+              <div class="text-xs text-indigo-700 font-semibold mb-1">Calzado Urbano</div>
+              <h4 class="font-bold text-slate-900 text-base mb-1">Sneaker Retro Runner</h4>
+              <p class="text-xs text-slate-500 line-clamp-2 mb-3">Inspiración vintage en combinación de gamuza y mesh respirable con amortiguación para caminata diaria.</p>
+              <div class="text-xs font-semibold text-slate-700 bg-indigo-100/70 inline-block px-2 py-1 rounded">Talles 36 al 44</div>
+            </div>
+          </div>
+          <div class="p-4 pt-0 flex items-center gap-2">
+            <button type="button" onclick="openProductModal('retro')" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 transition-colors">
+              Detalles
+            </button>
+            <a href="https://www.instagram.com/urb_anstepstore/?hl=es-la" target="_blank" rel="noopener noreferrer" class="py-2 px-3 text-xs font-semibold rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white transition-colors" title="Ver en Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card card-hover-effect bg-slate-50 border border-slate-200/90 rounded-2xl overflow-hidden flex flex-col justify-between" data-category="calzado" data-name="High Top Streetwear">
+          <div>
+            <div class="relative h-48 bg-indigo-900/10 flex items-center justify-center p-4 overflow-hidden">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_18385894788399941151_opt.jpg" alt="High Top Streetwear Urban Step" class="w-full h-full object-cover rounded-xl">
+              <span class="absolute top-2 left-2 text-[11px] font-bold px-2 py-0.5 rounded-md bg-indigo-900 text-indigo-100">Urban Step</span>
+            </div>
+            <div class="p-4">
+              <div class="text-xs text-indigo-700 font-semibold mb-1">Calzado Urbano</div>
+              <h4 class="font-bold text-slate-900 text-base mb-1">High Top Urban Canvas</h4>
+              <p class="text-xs text-slate-500 line-clamp-2 mb-3">Botita urbana en lona pesada reforzada con puntera protectora y suela de caucho vulcanizado.</p>
+              <div class="text-xs font-semibold text-slate-700 bg-indigo-100/70 inline-block px-2 py-1 rounded">Estilo Skate & Street</div>
+            </div>
+          </div>
+          <div class="p-4 pt-0 flex items-center gap-2">
+            <button type="button" onclick="openProductModal('hightop')" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 transition-colors">
+              Detalles
+            </button>
+            <a href="https://www.instagram.com/urb_anstepstore/?hl=es-la" target="_blank" rel="noopener noreferrer" class="py-2 px-3 text-xs font-semibold rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white transition-colors" title="Ver en Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card card-hover-effect bg-slate-50 border border-slate-200/90 rounded-2xl overflow-hidden flex flex-col justify-between" data-category="calzado" data-name="Skate Low Classic">
+          <div>
+            <div class="relative h-48 bg-indigo-900/10 flex items-center justify-center p-4 overflow-hidden">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_18385894788399941151_opt.jpg" alt="Skate Low Classic Urban Step" class="w-full h-full object-cover rounded-xl">
+              <span class="absolute top-2 left-2 text-[11px] font-bold px-2 py-0.5 rounded-md bg-indigo-900 text-indigo-100">Urban Step</span>
+            </div>
+            <div class="p-4">
+              <div class="text-xs text-indigo-700 font-semibold mb-1">Calzado Urbano</div>
+              <h4 class="font-bold text-slate-900 text-base mb-1">Skate Low Classic Pro</h4>
+              <p class="text-xs text-slate-500 line-clamp-2 mb-3">Zapatilla baja con refuerzo en talón y laterales, pensada para durabilidad y versatilidad casual.</p>
+              <div class="text-xs font-semibold text-slate-700 bg-indigo-100/70 inline-block px-2 py-1 rounded">Colores negro, blanco y marrón</div>
+            </div>
+          </div>
+          <div class="p-4 pt-0 flex items-center gap-2">
+            <button type="button" onclick="openProductModal('skate')" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 transition-colors">
+              Detalles
+            </button>
+            <a href="https://www.instagram.com/urb_anstepstore/?hl=es-la" target="_blank" rel="noopener noreferrer" class="py-2 px-3 text-xs font-semibold rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white transition-colors" title="Ver en Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 8 -->
+        <div class="product-card card-hover-effect bg-slate-50 border border-slate-200/90 rounded-2xl overflow-hidden flex flex-col justify-between" data-category="calzado" data-name="Sneaker Sport Comfort">
+          <div>
+            <div class="relative h-48 bg-indigo-900/10 flex items-center justify-center p-4 overflow-hidden">
+              <img src="user_uploaded_files/ttl=63d/tool_generated/watermarked_img_18385894788399941151_opt.jpg" alt="Sport Comfort Urban Step" class="w-full h-full object-cover rounded-xl">
+              <span class="absolute top-2 left-2 text-[11px] font-bold px-2 py-0.5 rounded-md bg-indigo-900 text-indigo-100">Urban Step</span>
+            </div>
+            <div class="p-4">
+              <div class="text-xs text-indigo-700 font-semibold mb-1">Calzado Urbano</div>
+              <h4 class="font-bold text-slate-900 text-base mb-1">Sneaker Air Flex Confort</h4>
+              <p class="text-xs text-slate-500 line-clamp-2 mb-3">Calzado liviano de alta flexibilidad, plantilla ergonómica de espuma viscoelástica para jornadas activas.</p>
+              <div class="text-xs font-semibold text-slate-700 bg-indigo-100/70 inline-block px-2 py-1 rounded">Ultraliviana y flexible</div>
+            </div>
+          </div>
+          <div class="p-4 pt-0 flex items-center gap-2">
+            <button type="button" onclick="openProductModal('sport')" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 transition-colors">
+              Detalles
+            </button>
+            <a href="https://www.instagram.com/urb_anstepstore/?hl=es-la" target="_blank" rel="noopener noreferrer" class="py-2 px-3 text-xs font-semibold rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white transition-colors" title="Ver en Instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- No Results Message -->
+      <div id="no-results" class="hidden text-center py-12">
+        <i class="fa-solid fa-face-meh text-3xl text-slate-400 mb-2"></i>
+        <p class="text-slate-600 font-medium">No se encontraron productos con ese término.</p>
+        <button type="button" onclick="resetFilters()" class="mt-3 px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold">Restablecer filtros</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT THE SCHOOL & FUENTES DEL COYLE -->
+  <section id="comunidad" class="py-20 lg:py-28 bg-slate-100/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left info -->
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 text-sky-800 border border-sky-200 mb-4">
+            <i class="fa-solid fa-school text-sky-600"></i> Educación Secundaria Rural Itinerante
+          </div>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-tight mb-6">
+            Aprender, Crear y Proyectar en la Patagonia Austral
+          </h2>
+          <div class="space-y-4 text-slate-600 text-base leading-relaxed">
+            <p>
+              El <strong>Colegio Provincial de Educación Secundaria Rural N° 35</strong> brinda oportunidades educativas a jóvenes de parajes rurales, estancias y zonas de meseta en la Provincia de Santa Cruz. Su sede en <strong>Fuentes del Coyle</strong> constituye un nodo vital de integración comunitaria.
+            </p>
+            <p>
+              A través de materias formativas y proyectos de economía, diseño y oficios, los estudiantes experimentan el proceso integral de emprender: desde la ideación del producto, el costo de materias primas y la elaboración manual, hasta la creación de marca, fotografía para redes sociales y atención al cliente.
+            </p>
+            <p>
+              Tanto con la tradición criolla de <strong>Flor del Sur</strong> como con la cultura contemporánea de <strong>Urban Step Store</strong>, demuestran que las distancias patagónicas se acortan con creatividad, trabajo en equipo e innovación digital.
+            </p>
+          </div>
+
+          <!-- Feature Bullets -->
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-start gap-3">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-tree"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-sm text-slate-900">Arraigo e Identidad</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Valorización del oficio rural y la riqueza de nuestras tierras.</p>
+              </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-start gap-3">
+              <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-sm text-slate-900">Economía Digital</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Comercio electrónico y gestión de redes sociales reales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Card: Fuentes del Coyle Info -->
+        <div class="lg:col-span-5">
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md">
+            <div class="flex items-center justify-between pb-5 border-b border-slate-100 mb-6">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-map-pin"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900 text-base">Paraje Fuentes del Coyle</h4>
+                  <p class="text-xs text-slate-500">Departamento Güer Aike, Santa Cruz</p>
+                </div>
+              </div>
+              <span class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded-full border border-emerald-200">Patagonia</span>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-600">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-route text-sky-600 mt-1"></i>
+                <div>
+                  <span class="font-semibold text-slate-800">Conectividad Austral:</span> Emplazado sobre las rutas históricas de Santa Cruz que unen Río Gallegos, Paraje Esperanza y la Cuenca Carbonífera (Río Turbio y 28 de Noviembre).
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-landmark text-sky-600 mt-1"></i>
+                <div>
+                  <span class="font-semibold text-slate-800">Comunidad Educativa:</span> El paraje comparte espacio con la emblemática Escuela Primaria Provincial Rural N° 34 y el CPES Rural N° 35.
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-heart text-sky-600 mt-1"></i>
+                <div>
+                  <span class="font-semibold text-slate-800">Impacto Positivo:</span> Tu apoyo a estos perfiles fortalece el futuro de la juventud santacruceña.
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-100">
+              <a href="#contacto" class="block text-center w-full py-3 px-4 rounded-xl font-semibold text-sm bg-slate-900 hover:bg-slate-800 text-white transition-colors">
+                Dejar Mensaje de Apoyo a los Alumnos
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE INQUIRY & SUPPORT SECTION -->
+  <section id="contacto" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-12">
+        <span class="text-xs uppercase font-bold tracking-wider text-sky-600">Comunidad & Pedidos</span>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-slate-900 mt-1">
+          Conectá con los Alumnos Emprendedores
+        </h2>
+        <p class="mt-3 text-slate-600 text-base max-w-xl mx-auto">
+          ¿Querés encargar un trabajo de talabartería a medida o consultar disponibilidad de zapatillas? Escribí un mensaje o conectate directamente con sus canales oficiales.
+        </p>
+      </div>
+
+      <!-- Quick Instagram Shortcuts Banner -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+        <a href="https://www.instagram.com/flordelsur.talabarteria/?hl=es-la" target="_blank" rel="noopener noreferrer" class="p-4 rounded-2xl border border-amber-200 bg-amber-50/50 hover:bg-amber-50 transition-colors flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full ig-gradient flex items-center justify-center text-white text-lg">
+              <i class="fa-brands fa-instagram"></i>
+            </div>
+            <div>
+              <div class="font-bold text-slate-900 text-sm">Flor del Sur Talabartería</div>
+              <div class="text-xs text-amber-800">@flordelsur.talabarteria</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-amber-700 text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+        </a>
+
+        <a href="https://www.instagram.com/urb_anstepstore/?hl=es-la" target="_blank" rel="noopener noreferrer" class="p-4 rounded-2xl border border-indigo-200 bg-indigo-50/50 hover:bg-indigo-50 transition-colors flex items-center justify-between group">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full ig-gradient flex items-center justify-center text-white text-lg">
+              <i class="fa-brands fa-instagram"></i>
+            </div>
+            <div>
+              <div class="font-bold text-slate-900 text-sm">Urban Step Store</div>
+              <div class="text-xs text-indigo-800">@urb_anstepstore</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-arrow-up-right-from-square text-indigo-700 text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+        </a>
+      </div>
+
+      <!-- Interactive Contact & Support Form (No alerts, uses in-page feedback) -->
+      <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-sm">
+        <h3 class="font-display font-bold text-xl text-slate-900 mb-2">Envianos tu consulta o mensaje de apoyo</h3>
+        <p class="text-xs sm:text-sm text-slate-500 mb-6">Completá este formulario y te responderemos a través de los coordinadores y estudiantes del CPES N° 35.</p>
+
+        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="contact-name" class="block text-xs font-semibold text-slate-700 mb-1">Tu Nombre y Apellido</label>
+              <input type="text" id="contact-name" required placeholder="Ej: Marcela González" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+            </div>
+            <div>
+              <label for="contact-email" class="block text-xs font-semibold text-slate-700 mb-1">Correo Electrónico o Teléfono</label>
+              <input type="text" id="contact-email" required placeholder="Ej: marcela@ejemplo.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+            </div>
+          </div>
+
+          <div>
+            <label for="contact-recipient" class="block text-xs font-semibold text-slate-700 mb-1">Destinatario del Mensaje</label>
+            <select id="contact-recipient" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+              <option value="both">Ambos Emprendimientos / Escuela CPES N° 35</option>
+              <option value="talabarteria">Flor del Sur - Talabartería Criolla</option>
+              <option value="calzado">Urban Step Store - Calzado & Moda</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="contact-message" class="block text-xs font-semibold text-slate-700 mb-1">Mensaje o Pedido de Cotización</label>
+            <textarea id="contact-message" rows="4" required placeholder="Contanos qué producto te interesa, qué talle o diseño personalizado buscás..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+          </div>
+
+          <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span class="text-xs text-slate-500">
+              <i class="fa-solid fa-lock text-slate-400 mr-1"></i> Tu mensaje será compartido con los alumnos tutelados.
+            </span>
+            <button type="submit" id="contact-submit-btn" class="w-full sm:w-auto px-6 py-3 rounded-xl font-semibold text-sm text-white bg-sky-600 hover:bg-sky-700 shadow-sm transition-all duration-200">
+              <i class="fa-regular fa-paper-plane mr-2"></i>
+              <span>Enviar Mensaje</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white pt-16 pb-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        
+        <!-- Col 1: School Identity -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-sky-600 flex items-center justify-center text-white">
+              <i class="fa-solid fa-graduation-cap text-lg"></i>
+            </div>
+            <div>
+              <div class="font-display font-bold text-lg leading-tight">CPES Rural N° 35</div>
+              <div class="text-xs text-sky-400">Fuentes del Coyle</div>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Colegio Provincial de Educación Secundaria Rural Itinerante. Formando jóvenes con sentido de pertenencia, oficio y vocación emprendedora en Santa Cruz, Argentina.
+          </p>
+        </div>
+
+        <!-- Col 2: Flor del Sur -->
+        <div>
+          <h4 class="font-display font-semibold text-sm uppercase tracking-wider text-amber-400 mb-4">Flor del Sur Talabartería</h4>
+          <p class="text-xs text-slate-400 mb-3">Artesanías en cuero crudo y curtido, mates, cintos repujados y cuchillería campera.</p>
+          <a href="https://www.instagram.com/flordelsur.talabarteria/?hl=es-la" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold text-amber-300 hover:text-amber-200 transition-colors">
+            <i class="fa-brands fa-instagram text-sm"></i> @flordelsur.talabarteria
+          </a>
+        </div>
+
+        <!-- Col 3: Urban Step Store -->
+        <div>
+          <h4 class="font-display font-semibold text-sm uppercase tracking-wider text-indigo-400 mb-4">Urban Step Store</h4>
+          <p class="text-xs text-slate-400 mb-3">Zapatillas urbanas, calzado skate y moda streetwear para toda la provincia.</p>
+          <a href="https://www.instagram.com/urb_anstepstore/?hl=es-la" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold text-indigo-300 hover:text-indigo-200 transition-colors">
+            <i class="fa-brands fa-instagram text-sm"></i> @urb_anstepstore
+          </a>
+        </div>
+
+        <!-- Col 4: Links & Localidad -->
+        <div>
+          <h4 class="font-display font-semibold text-sm uppercase tracking-wider text-slate-300 mb-4">Ubicación y Comunidad</h4>
+          <ul class="space-y-2 text-xs text-slate-400">
+            <li><i class="fa-solid fa-map-pin text-sky-500 mr-2"></i> Paraje Fuentes del Coyle, Santa Cruz</li>
+            <li><i class="fa-solid fa-road text-sky-500 mr-2"></i> Ruta Nacional 40 / Ruta Prov. 7</li>
+            <li><i class="fa-solid fa-building-columns text-sky-500 mr-2"></i> Consejo Provincial de Educación</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Credits -->
+      <div class="pt-8 border-t border-slate-800 text-center sm:flex sm:justify-between sm:items-center text-xs text-slate-500">
+        <p>© 2026 Estudiantes y Comunidad del CPES Rural N° 35 • Fuentes del Coyle.</p>
+        <p class="mt-2 sm:mt-0">Diseñado para la difusión de proyectos educativos y emprendimientos santacruceños.</p>
+      </div>
+
     </div>
   </footer>
 
-  <!-- Modal de confirmación para uso responsable de emergencia -->
-  <div id="emergency-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border-2 border-red-500 transform scale-95 transition-transform duration-200" id="modal-box">
-      <div class="text-center space-y-3">
-        <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">
-          🛡️
-        </div>
-        <h3 class="text-xl font-bold text-slate-900 font-serif">Línea de Emergencia de la Brigada</h3>
-        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-          Estás por comunicarte con la línea personal de guardia (<strong>2966-222702</strong>).
-        </p>
-        <div class="bg-amber-50 border border-amber-300 rounded-xl p-3 text-xs text-amber-900 text-left space-y-1">
-          <p class="font-bold flex items-center gap-1">
-            <span>⚠️</span> Recordatorio de uso responsable:
-          </p>
-          <p>
-            Por favor, confirma que te encuentras atravesando una <strong>crisis emocional, angustia severa o situación de riesgo</strong>. No uses este contacto para mensajes casuales ni consultas secundarias.
-          </p>
+  <!-- MODAL: PRODUCT DETAILS -->
+  <div id="product-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200 transform transition-transform duration-300 scale-95" id="product-modal-container">
+      <div class="relative h-60 bg-slate-900">
+        <img id="modal-img" src="" alt="Producto" class="w-full h-full object-cover">
+        <button type="button" onclick="closeProductModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900/80 text-white flex items-center justify-center hover:bg-slate-900 transition-colors">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="absolute bottom-3 left-4">
+          <span id="modal-tag" class="px-3 py-1 rounded-full text-xs font-bold text-white shadow-sm"></span>
         </div>
       </div>
+      
+      <div class="p-6">
+        <h3 id="modal-title" class="font-display font-bold text-2xl text-slate-900 mb-1"></h3>
+        <p id="modal-brand" class="text-xs font-semibold uppercase tracking-wider text-sky-600 mb-3"></p>
+        <p id="modal-desc" class="text-sm text-slate-600 leading-relaxed mb-4"></p>
+        
+        <div id="modal-features" class="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-xs text-slate-700 space-y-2 mb-6">
+        </div>
 
-      <div class="mt-6 flex flex-col sm:flex-row gap-2.5">
-        <button id="modal-btn-confirm" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm transition shadow">
-          Sí, es una emergencia / crisis
-        </button>
-        <button onclick="closeEmergencyModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-3 rounded-xl text-sm transition">
-          Cancelar
-        </button>
+        <div class="flex items-center gap-3">
+          <a id="modal-ig-link" href="#" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 px-4 rounded-xl font-semibold text-sm text-white bg-slate-900 hover:bg-slate-800 transition-colors flex items-center justify-center gap-2">
+            <i class="fa-brands fa-instagram text-pink-400"></i>
+            <span>Ver y Consultar en Instagram</span>
+          </a>
+          <button type="button" onclick="closeProductModal()" class="py-3 px-4 rounded-xl font-semibold text-sm text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors">
+            Cerrar
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2 border border-slate-700">
-    <span id="toast-message">Texto copiado con éxito</span>
-  </div>
-
+  <!-- SCRIPT LOGIC (SANDBOX SAFE, FULLY WORKING HANDLERS) -->
   <script>
-    let pendingAction = null;
+    // Product data registry
+    const productsData = {
+      mate: {
+        title: "Mate Criollo Camionero Repujado",
+        brand: "Flor del Sur • Talabartería",
+        tag: "Flor del Sur",
+        tagClass: "bg-amber-800",
+        img: "user_uploaded_files/ttl=63d/tool_generated/watermarked_img_8760602179200025646_opt.jpg",
+        ig: "https://www.instagram.com/flordelsur.talabarteria/?hl=es-la",
+        desc: "Elaborado por los estudiantes con calabaza curada de pared gruesa, revestida en cuero vacuno teñido a mano con costuras reforzadas a la lezna. Virola de alpaca cincelada artesanalmente.",
+        features: [
+          "✓ Virola resistente de alpaca de alta duración",
+          "✓ Forrado en cuero con base ancha antigolpes",
+          "✓ Curado tradicional fácil y óptimo para yerba mate",
+          "✓ Producto 100% elaborado a mano en Fuentes del Coyle"
+        ]
+      },
+      cinto: {
+        title: "Cinto Cuero Labrado Patagónico",
+        brand: "Flor del Sur • Talabartería",
+        tag: "Flor del Sur",
+        tagClass: "bg-amber-800",
+        img: "user_uploaded_files/ttl=63d/tool_generated/watermarked_img_8760602179200025646_opt.jpg",
+        ig: "https://www.instagram.com/flordelsur.talabarteria/?hl=es-la",
+        desc: "Cinturón campero confeccionado en suela vacuna de primera selección con curtido vegetal. Labrado en relieve con guardas y motivos criollos, hebilla maciza de bronce pulido.",
+        features: [
+          "✓ Ancho estándar para campo y uso casual (4 cm)",
+          "✓ Pasador reforzado en cuero y doble costura",
+          "✓ Confección a medida según el talle del comprador",
+          "✓ Tratamiento con cera natural para resistencia al agua"
+        ]
+      },
+      vaina: {
+        title: "Vaina para Cuchillo Campero",
+        brand: "Flor del Sur • Talabartería",
+        tag: "Flor del Sur",
+        tagClass: "bg-amber-800",
+        img: "user_uploaded_files/ttl=63d/tool_generated/watermarked_img_8760602179200025646_opt.jpg",
+        ig: "https://www.instagram.com/flordelsur.talabarteria/?hl=es-la",
+        desc: "Funda de cuero sobado con traba de seguridad y pasacinto resistente. Pensada para cuchillos de campo de diferentes pulgadas con bordes biselados y pulidos.",
+        features: [
+          "✓ Ajuste preciso para hoja y gavilán",
+          "✓ Costura en tiento crudo trenzado a mano",
+          "✓ Excelente protección contra la intemperie patagónica"
+        ]
+      },
+      billetera: {
+        title: "Billetera Compacta Artesanal",
+        brand: "Flor del Sur • Talabartería",
+        tag: "Flor del Sur",
+        tagClass: "bg-amber-800",
+        img: "user_uploaded_files/ttl=63d/tool_generated/watermarked_img_8760602179200025646_opt.jpg",
+        ig: "https://www.instagram.com/flordelsur.talabarteria/?hl=es-la",
+        desc: "Billetera de bolsillo en cuero legítimo suave al tacto. Con capacidad para 6 tarjetas, billetes extendidos y detalles en los bordes confeccionados a mano.",
+        features: [
+          "✓ Cuero que embellece con el paso del tiempo",
+          "✓ Diseño delgado para no abultar en el bolsillo",
+          "✓ Hilo encerado de alta resistencia al desgarro"
+        ]
+      },
+      retro: {
+        title: "Sneaker Retro Runner Urbana",
+        brand: "Urban Step Store",
+        tag: "Urban Step",
+        tagClass: "bg-indigo-800",
+        img: "user_uploaded_files/ttl=63d/tool_generated/watermarked_img_18385894788399941151_opt.jpg",
+        ig: "https://www.instagram.com/urb_anstepstore/?hl=es-la",
+        desc: "Diseño vintage atemporal que combina gamuza suave en tonos pasteles y tierra con paneles de mesh respirable. Suela de goma con tracción para asfalto y vereda.",
+        features: [
+          "✓ Talles disponibles del 36 al 44",
+          "✓ Plantilla amortiguada para comodidad de todo el día",
+          "✓ Estilo casual para combinar con jeans y joggers"
+        ]
+      },
+      hightop: {
+        title: "High Top Urban Canvas Sneaker",
+        brand: "Urban Step Store",
+        tag: "Urban Step",
+        tagClass: "bg-indigo-800",
+        img: "user_uploaded_files/ttl=63d/tool_generated/watermarked_img_18385894788399941151_opt.jpg",
+        ig: "https://www.instagram.com/urb_anstepstore/?hl=es-la",
+        desc: "La zapatilla botita clásica del streetwear. Lona gruesa de alta durabilidad, puntera de goma blanca reforzada y cuello acolchado para mayor sostén del tobillo.",
+        features: [
+          "✓ Construcción vulcanizada resistente al desgaste",
+          "✓ Look icónico urbano skate y juvenil",
+          "✓ Cordones planos de algodón de alta resistencia"
+        ]
+      },
+      skate: {
+        title: "Skate Low Classic Pro",
+        brand: "Urban Step Store",
+        tag: "Urban Step",
+        tagClass: "bg-indigo-800",
+        img: "user_uploaded_files/ttl=63d/tool_generated/watermarked_img_18385894788399941151_opt.jpg",
+        ig: "https://www.instagram.com/urb_anstepstore/?hl=es-la",
+        desc: "Zapatilla de perfil bajo con costuras dobles en zonas de mayor fricción. Suela con patrón waffle antideslizante para adherencia en tablas y pisos lisos.",
+        features: [
+          "✓ Interior forrado con tela transpirable",
+          "✓ Disponible en variedad de combinaciones de colores",
+          "✓ Envío coordinado a Río Gallegos, Turbio y toda la provincia"
+        ]
+      },
+      sport: {
+        title: "Sneaker Air Flex Confort",
+        brand: "Urban Step Store",
+        tag: "Urban Step",
+        tagClass: "bg-indigo-800",
+        img: "user_uploaded_files/ttl=63d/tool_generated/watermarked_img_18385894788399941151_opt.jpg",
+        ig: "https://www.instagram.com/urb_anstepstore/?hl=es-la",
+        desc: "Calzado deportivo urbano hiperliviano. Tejido elástico que se adapta a la forma del pie como un guante con cámara de aire visible en el talón para absorber impactos.",
+        features: [
+          "✓ Peso pluma: ideal para caminatas y días activos",
+          "✓ Lavable y de secado rápido",
+          "✓ Talles variados para hombres y mujeres"
+        ]
+      }
+    };
 
-    function confirmEmergencyContact(type) {
-      pendingAction = type;
-      const modal = document.getElementById('emergency-modal');
-      const box = document.getElementById('modal-box');
+    // Mobile menu toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileIcon = document.getElementById('mobile-menu-icon');
+
+    mobileBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.contains('hidden');
+      if (isHidden) {
+        mobileMenu.classList.remove('hidden');
+        mobileIcon.classList.replace('fa-bars', 'fa-xmark');
+      } else {
+        mobileMenu.classList.add('hidden');
+        mobileIcon.classList.replace('fa-xmark', 'fa-bars');
+      }
+    });
+
+    // Close mobile menu on click link
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileIcon.classList.replace('fa-xmark', 'fa-bars');
+      });
+    });
+
+    // Toast notification helper
+    let toastTimeout;
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      const toastIcon = document.getElementById('toast-icon');
+
+      toastMsg.textContent = message;
+      if (isSuccess) {
+        toastIcon.className = "w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0";
+        toastIcon.innerHTML = '<i class="fa-solid fa-check"></i>';
+      } else {
+        toastIcon.className = "w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0";
+        toastIcon.innerHTML = '<i class="fa-solid fa-info"></i>';
+      }
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3500);
+    }
+
+    // Copy Instagram Link to clipboard
+    function copyInstagramLink(url, brandName) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+          .then(() => showToast(`¡Enlace de Instagram de ${brandName} copiado!`))
+          .catch(() => fallbackCopy(url, brandName));
+      } else {
+        fallbackCopy(url, brandName);
+      }
+    }
+
+    function fallbackCopy(text, brandName) {
+      try {
+        const tempInput = document.createElement("input");
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        showToast(`¡Enlace de ${brandName} copiado!`);
+      } catch (e) {
+        showToast("Seleccioná y copiá el enlace: " + text, false);
+      }
+    }
+
+    // Catalog filtering
+    let currentCategory = 'all';
+
+    function filterCatalog(category) {
+      currentCategory = category;
+      const buttons = {
+        all: document.getElementById('filter-btn-all'),
+        talabarteria: document.getElementById('filter-btn-talabarteria'),
+        calzado: document.getElementById('filter-btn-calzado')
+      };
+
+      // Reset button styles
+      Object.keys(buttons).forEach(k => {
+        buttons[k].className = "catalog-filter-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-slate-100 text-slate-700 hover:bg-slate-200";
+      });
+
+      // Active button style
+      if (category === 'all') {
+        buttons.all.className = "catalog-filter-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-slate-900 text-white shadow-xs";
+      } else if (category === 'talabarteria') {
+        buttons.talabarteria.className = "catalog-filter-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-amber-800 text-white shadow-xs";
+      } else if (category === 'calzado') {
+        buttons.calzado.className = "catalog-filter-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 bg-indigo-800 text-white shadow-xs";
+      }
+
+      applyFilters();
+
+      // Smooth scroll to catalog if clicked from outside
+      const catalogoSection = document.getElementById('catalogo');
+      if (catalogoSection) {
+        catalogoSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function resetFilters() {
+      document.getElementById('catalog-search').value = '';
+      filterCatalog('all');
+    }
+
+    function handleSearch() {
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const searchVal = document.getElementById('catalog-search').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.product-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const name = card.getAttribute('data-name').toLowerCase();
+        const text = card.textContent.toLowerCase();
+
+        const matchesCat = (currentCategory === 'all' || cat === currentCategory);
+        const matchesSearch = !searchVal || name.includes(searchVal) || text.includes(searchVal);
+
+        if (matchesCat && matchesSearch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      const noRes = document.getElementById('no-results');
+      if (visibleCount === 0) {
+        noRes.classList.remove('hidden');
+      } else {
+        noRes.classList.add('hidden');
+      }
+    }
+
+    // Modal Details Logic
+    const modal = document.getElementById('product-modal');
+    const modalContainer = document.getElementById('product-modal-container');
+
+    function openProductModal(key) {
+      const item = productsData[key];
+      if (!item) return;
+
+      document.getElementById('modal-img').src = item.img;
+      document.getElementById('modal-title').textContent = item.title;
+      document.getElementById('modal-brand').textContent = item.brand;
+      document.getElementById('modal-tag').textContent = item.tag;
+      document.getElementById('modal-tag').className = `px-3 py-1 rounded-full text-xs font-bold text-white shadow-sm ${item.tagClass}`;
+      document.getElementById('modal-desc').textContent = item.desc;
+      document.getElementById('modal-ig-link').href = item.ig;
+
+      const featDiv = document.getElementById('modal-features');
+      featDiv.innerHTML = item.features.map(f => `<div>${f}</div>`).join('');
+
       modal.classList.remove('hidden');
       setTimeout(() => {
-        modal.classList.remove('opacity-0');
-        box.classList.remove('scale-95');
-        box.classList.add('scale-100');
+        modalContainer.classList.remove('scale-95');
+        modalContainer.classList.add('scale-100');
       }, 10);
     }
 
-    function closeEmergencyModal() {
-      const modal = document.getElementById('emergency-modal');
-      const box = document.getElementById('modal-box');
-      modal.classList.add('opacity-0');
-      box.classList.remove('scale-100');
-      box.classList.add('scale-95');
+    function closeProductModal() {
+      modalContainer.classList.remove('scale-100');
+      modalContainer.classList.add('scale-95');
       setTimeout(() => {
         modal.classList.add('hidden');
-        pendingAction = null;
       }, 200);
     }
 
-    document.getElementById('modal-btn-confirm').addEventListener('click', () => {
-      const modal = document.getElementById('emergency-modal');
-      modal.classList.add('hidden');
-      modal.classList.add('opacity-0');
-
-      if (pendingAction === 'wa') {
-        const msg = encodeURIComponent('Hola, me comunico de urgencia con la persona responsable de la Brigada Guardianes de Fe y Amor. Estoy atravesando una situación de crisis y angustia extrema, necesito ayuda.');
-        window.open(`https://wa.me/5492966222702?text=${msg}`, '_blank');
-      } else if (pendingAction === 'call') {
-        window.location.href = 'tel:2966222702';
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeProductModal();
       }
-      pendingAction = null;
     });
 
-    // Colección de promesas de fe y reflexiones
-    const quotes = [
-      {
-        quote: "Cercano está el Señor a los quebrantados de corazón, y salva a los de espíritu abatido.",
-        source: "Salmos 34:18",
-        category: "Consuelo Divino",
-        reflection: "Cuando sientas que tu corazón no da más, no estás abandonado. Dios está más cerca de ti en tu dolor que en cualquier otro momento. La Brigada Guardianes de Fe y Amor está a tu lado."
-      },
-      {
-        quote: "Porque yo sé muy bien los planes que tengo para ustedes —afirma el Señor—, planes de bienestar y no de calamidad, a fin de darles un futuro y una esperanza.",
-        source: "Jeremías 29:11",
-        category: "Propósito y Futuro",
-        reflection: "Tu historia en Santa Cruz no concluye en este día oscuro. Dios tiene reservado un mañana con propósito, sanidad y bendición para ti."
-      },
-      {
-        quote: "No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios que te esfuerzo; siempre te ayudaré, siempre te sustentaré con la diestra de mi justicia.",
-        source: "Isaías 41:10",
-        category: "Fortaleza en Crisis",
-        reflection: "No dependes de tus débiles fuerzas actuales; el brazo de Dios te sostiene firme. Comunícate al 2966-222702 para orar juntos."
-      },
-      {
-        quote: "Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar.",
-        source: "Mateo 11:28",
-        category: "Descanso del Alma",
-        reflection: "Entrégale esa angustia asfixiante al Señor. No cargues con todo a solas; permítenos ayudarte a sostener la carga."
-      },
-      {
-        quote: "Con amor eterno te he amado; por tanto, te prolongué mi misericordia.",
-        source: "Jeremías 31:3",
-        category: "Amor Incondicional",
-        reflection: "El amor de Dios hacia ti no depende de tus errores ni de tus sentimientos de hoy. Eres de inestimable valor para Él."
-      },
-      {
-        quote: "Aunque pase por el valle de sombra de muerte, no temeré mal alguno, porque tú estarás conmigo; tu vara y tu cayado me infundirán aliento.",
-        source: "Salmos 23:4",
-        category: "Compañía en el Dolor",
-        reflection: "Incluso en la noche más fría y solitaria del sur patagónico, la presencia de Dios es tu refugio inquebrantable."
-      },
-      {
-        quote: "Él sana a los quebrantados de corazón, y venda sus heridas.",
-        source: "Salmos 147:3",
-        category: "Sanidad Emocional",
-        reflection: "No hay herida en tu mente o corazón que escape del amor restaurador del Creador. Date una oportunidad más hoy."
-      },
-      {
-        quote: "La paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones y vuestros pensamientos en Cristo Jesús.",
-        source: "Filipenses 4:7",
-        category: "Paz Interior",
-        reflection: "Permite que la paz de Dios descienda sobre tu mente en este segundo. Estás a salvo y hay un equipo orando por ti."
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeProductModal();
       }
-    ];
+    });
 
-    let currentQuoteIndex = 0;
-
-    // Referencias al DOM
-    const quoteText = document.getElementById('quote-text');
-    const quoteSource = document.getElementById('quote-source');
-    const quoteCategory = document.getElementById('verse-category');
-    const quoteReflection = document.getElementById('quote-reflection');
-    const btnNextQuote = document.getElementById('btn-next-quote');
-    const btnCopyQuote = document.getElementById('btn-copy-quote');
-    const btnShareQuote = document.getElementById('btn-share-quote');
-    const btnSavePrayer = document.getElementById('btn-save-prayer');
-    const toast = document.getElementById('toast');
-    const toastMessage = document.getElementById('toast-message');
-
-    // Función para actualizar la promesa con transición suave
-    function updateQuote(index) {
-      const q = quotes[index];
-      quoteText.style.opacity = 0;
-      quoteReflection.style.opacity = 0;
-
-      setTimeout(() => {
-        quoteText.textContent = `"${q.quote}"`;
-        quoteSource.textContent = `— ${q.source}`;
-        quoteCategory.textContent = q.category;
-        quoteReflection.textContent = q.reflection;
-        quoteText.style.opacity = 1;
-        quoteReflection.style.opacity = 1;
-      }, 150);
-    }
-
-    btnNextQuote.addEventListener('click', () => {
-      let nextIndex;
-      do {
-        nextIndex = Math.floor(Math.random() * quotes.length);
-      } while (nextIndex === currentQuoteIndex && quotes.length > 1);
+    // Contact Form Handler
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('contact-name').value;
+      const recipient = document.getElementById('contact-recipient').value;
       
-      currentQuoteIndex = nextIndex;
-      updateQuote(currentQuoteIndex);
-    });
+      let targetName = "los estudiantes del CPES N° 35";
+      if (recipient === 'talabarteria') targetName = "Flor del Sur Talabartería";
+      if (recipient === 'calzado') targetName = "Urban Step Store";
 
-    // Toast de notificación
-    function showToast(msg) {
-      toastMessage.textContent = msg;
-      toast.classList.remove('opacity-0', 'pointer-events-none');
-      toast.classList.add('opacity-100');
+      // Reset form
+      document.getElementById('contact-form').reset();
 
-      setTimeout(() => {
-        toast.classList.remove('opacity-100');
-        toast.classList.add('opacity-0', 'pointer-events-none');
-      }, 3200);
+      // Show friendly confirmation toast
+      showToast(`¡Gracias ${name}! Tu mensaje ha sido enviado a ${targetName}.`);
     }
-
-    // Función segura para copiar texto
-    function copyTextToClipboard(text, successMsg) {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      
-      try {
-        document.execCommand('copy');
-        showToast(successMsg || 'Copiado al portapapeles');
-      } catch (err) {
-        showToast('No se pudo copiar');
-      } finally {
-        document.body.removeChild(textarea);
-      }
-    }
-
-    btnCopyQuote.addEventListener('click', () => {
-      const q = quotes[currentQuoteIndex];
-      const textToCopy = `"${q.quote}" - ${q.source}\nReflexión: ${q.reflection}\n(Brigada Guardianes de Fe y Amor - Santa Cruz • Tel: 2966-222702)`;
-      copyTextToClipboard(textToCopy, 'Palabra de aliento copiada');
-    });
-
-    btnShareQuote.addEventListener('click', () => {
-      const q = quotes[currentQuoteIndex];
-      const shareData = {
-        title: 'Brigada Guardianes de Fe y Amor',
-        text: `"${q.quote}" - ${q.source}. Dios cuida de ti. Si estás pasando por un momento difícil en Santa Cruz, comunícate con la Brigada Guardianes de Fe y Amor al 2966-222702 o a la Línea 135.`,
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        navigator.share(shareData).catch(() => {});
-      } else {
-        copyTextToClipboard(`${shareData.text} ${window.location.href}`, 'Mensaje de esperanza copiado para enviar');
-      }
-    });
-
-    btnSavePrayer.addEventListener('click', () => {
-      const prayer = `Oración de Protección - Brigada Guardianes de Fe y Amor (Santa Cruz): "Padre celestial, hoy mi alma está quebrantada y mis fuerzas se han agotado. Me refugio en tu cuidado y en la certeza de que me amas. Envía a tus ángeles a guardar mi corazón de la desesperación, rodéame con personas que me sostengan y devuélveme la esperanza de vivir. Te entrego mi vida, en el nombre de Jesús. Amén." • Contacto: 2966-222702`;
-      copyTextToClipboard(prayer, 'Oración copiada con éxito');
-    });
-
-    // Módulo de respiración de 4 tiempos
-    const breatheInstruction = document.getElementById('breathe-instruction');
-    const breatheCounter = document.getElementById('breathe-counter');
-    const breatheCircle = document.getElementById('breathe-circle');
-    const breatheOuter = document.getElementById('breathe-outer');
-    const btnToggleBreathe = document.getElementById('btn-toggle-breathe');
-    const btnResetBreathe = document.getElementById('btn-reset-breathe');
-
-    const phases = [
-      { name: 'Inhala', duration: 4, scale: 1.25 },
-      { name: 'Sostén', duration: 4, scale: 1.25 },
-      { name: 'Exhala despacio', duration: 4, scale: 0.9 }
-    ];
-
-    let currentPhaseIndex = 0;
-    let secondsLeft = 4;
-    let breathingInterval = null;
-    let isBreathingActive = true;
-
-    function applyPhaseVisuals(phase) {
-      breatheInstruction.textContent = phase.name;
-      breatheCircle.style.transform = `scale(${phase.scale})`;
-      breatheOuter.style.transform = `scale(${phase.scale * 1.15})`;
-    }
-
-    function runBreathingTick() {
-      breatheCounter.textContent = secondsLeft;
-      
-      if (secondsLeft === 0) {
-        currentPhaseIndex = (currentPhaseIndex + 1) % phases.length;
-        secondsLeft = phases[currentPhaseIndex].duration;
-        applyPhaseVisuals(phases[currentPhaseIndex]);
-        breatheCounter.textContent = secondsLeft;
-      }
-      secondsLeft--;
-    }
-
-    function startBreathing() {
-      if (breathingInterval) clearInterval(breathingInterval);
-      applyPhaseVisuals(phases[currentPhaseIndex]);
-      breathingInterval = setInterval(runBreathingTick, 1000);
-      isBreathingActive = true;
-      btnToggleBreathe.textContent = 'Pausar ejercicio';
-    }
-
-    function pauseBreathing() {
-      if (breathingInterval) clearInterval(breathingInterval);
-      isBreathingActive = false;
-      btnToggleBreathe.textContent = 'Reanudar ejercicio';
-    }
-
-    btnToggleBreathe.addEventListener('click', () => {
-      if (isBreathingActive) {
-        pauseBreathing();
-      } else {
-        startBreathing();
-      }
-    });
-
-    btnResetBreathe.addEventListener('click', () => {
-      pauseBreathing();
-      currentPhaseIndex = 0;
-      secondsLeft = 4;
-      breatheCounter.textContent = '4';
-      applyPhaseVisuals(phases[0]);
-      startBreathing();
-    });
-
-    // Iniciar con la primera promesa y respiración activa
-    window.addEventListener('load', () => {
-      updateQuote(0);
-      startBreathing();
-    });
   </script>
 </body>
 </html>
